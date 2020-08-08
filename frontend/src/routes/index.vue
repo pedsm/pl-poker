@@ -1,0 +1,58 @@
+<template>
+  <div>
+    <h1>Planning-poker</h1>
+    <div>
+      <p>
+        <input v-model="roomNumber" placeholder="Room name" type="text"/>
+        <button v-on:click="joinRoom" class="bt">Enter room</button>
+      </p>
+    </div>
+  </div>
+</template>
+
+<script>
+
+export default {
+  name: 'App',
+  data: () => ({
+      roomNumber: ''
+  }),
+  methods: {
+      joinRoom: function() {
+          const {roomNumber} = this;
+          if(roomNumber) {
+              console.log('Joining room', this.roomNumber)
+              return this.$router.push({ name:'room', params: { room: roomNumber } })
+          }
+          console.log('Room was not provided')
+      }
+  },
+  components: {}
+}
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  margin-top: 60px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+
+.bt {
+  color: white;
+  background-color: black;
+  padding: 10px 20px;
+  border: 0;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+</style>
