@@ -5,11 +5,12 @@ import VueSocketIO from 'vue-socket.io'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        count: 0
+        room: null
     },
     mutations: {
-        increment(state){
-            state.count++
+        socket_pool(state, room) {
+            console.log(room)
+            state.room = room
         }
     }
 })
@@ -19,8 +20,8 @@ Vue.use(new VueSocketIO({
   connection: 'http://localhost:3000',
   vuex: {
     store,
-    actionPrefix: 'SOCKET_',
-    mutationPrefix: 'SOCKET_'
+    actionPrefix: 'socket_',
+    mutationPrefix: 'socket_'
   }
 }))
 

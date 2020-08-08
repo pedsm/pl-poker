@@ -18,20 +18,41 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('A user has connected');
+  socket.name = "Jeff"
   socket.on('join', (roomId) => {
       if(rooms[roomId] == null) {
         rooms[roomId] = createRoom(roomId)
       }
       joinRoom(roomId, socket)
   })
+
+  socket.on('changeName', (roomId, name) => {
+      socket.name = name
+  })
+
+  socket.on('pool', (roomId) => {
+      io.emit('state', rooms[roomId])
+  })
 });
+
+setInterval(() => {
+    //sort that out
+    for([id, room] of Object.entries(rooms)) {
+        // console.log('pool', id)
+        for([id, {socket}] of Object.entries(room.members)) {
+            socket.emit('pool', {
+                id: room.id,
+                deck: room.deck,
+                members: Object.entries(room.members)
+                    .map(([_, socket]) => socket.name)
+            })
+        }
+        
+    }
+}, 1000)
 
 
 // RoomManager logic and stuff
-
-function changeName(socket, name) {
-
-}
 
 function joinRoom(roomId, socket) {
     console.log(`${socket.id} is joining ${roomId}`)
@@ -42,9 +63,12 @@ function joinRoom(roomId, socket) {
     const {id} = socket
     room.members[id] = {
         socket,
-        name: 'Jeff'
     }
 
+}
+
+function findRoomIdByUser(socket) {
+    return socket.rooms[0];
 }
 
 function createRoom(id) {
