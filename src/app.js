@@ -29,13 +29,14 @@ io.on('connection', (socket) => {
       joinRoom(roomId, socket)
   })
 
-  socket.on('changeName', (roomId, name) => {
+  socket.on('changeName', (name) => {
       socket.name = name
   })
 
   socket.on('pool', (roomId) => {
       io.emit('state', rooms[roomId])
   })
+
   socket.on('disconnect', (reason) => {
       console.log(`${socket.id} has disconected, ${reason}`)
       removeFromRoom(socket)

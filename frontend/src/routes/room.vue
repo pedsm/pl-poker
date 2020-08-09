@@ -19,7 +19,6 @@ export default {
     created() {
         const {room} = this.$route.params
         console.log(`Joining room ${room}`)
-        // this.$store.commit('socket_join', room)
         this.$socket.emit('join', room)
     },
     methods: {
