@@ -12,6 +12,20 @@ const store = new Vuex.Store({
             console.log(room)
             state.room = room
         }
+    },
+    getters: {
+      getDeck(state) {
+        if(state.room) {
+          return state.room.deck
+        }
+        return []
+      },
+      getMembers(state) {
+        if(state.room) {
+          return state.room.members
+        }
+        return []
+      }
     }
 })
 

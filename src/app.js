@@ -13,7 +13,10 @@ http.listen(PORT, ()=> {
 })
 
 app.get('/', (req, res) => {
-    res.send('Hello')
+    res.send({
+        clientCount: Object.keys(io.sockets.sockets).length, // this is probably wrong if it is counting rooms as sockets
+        roomCount: Object.keys(rooms).length
+    })
 })
 
 io.on('connection', (socket) => {
@@ -33,18 +36,25 @@ io.on('connection', (socket) => {
   socket.on('pool', (roomId) => {
       io.emit('state', rooms[roomId])
   })
+  socket.on('disconnect', (reason) => {
+      console.log(`${socket.id} has disconected, ${reason}`)
+      removeFromRoom(socket)
+  })
 });
 
 setInterval(() => {
     //sort that out
     for([id, room] of Object.entries(rooms)) {
-        // console.log('pool', id)
+        const members = Object.entries(room.members)
+            .map(([id, conn]) => ({
+                id,
+                name: conn.socket.name
+            }))
         for([id, {socket}] of Object.entries(room.members)) {
             socket.emit('pool', {
                 id: room.id,
                 deck: room.deck,
-                members: Object.entries(room.members)
-                    .map(([_, socket]) => socket.name)
+                members,
             })
         }
         
@@ -57,6 +67,7 @@ setInterval(() => {
 function joinRoom(roomId, socket) {
     console.log(`${socket.id} is joining ${roomId}`)
     socket.join(roomId, () => {
+        socket.roomId = roomId
         console.log(`${socket.id} has joined ${roomId}`)
       })
     const room = rooms[roomId]
@@ -64,12 +75,15 @@ function joinRoom(roomId, socket) {
     room.members[id] = {
         socket,
     }
-
 }
 
-function findRoomIdByUser(socket) {
-    return socket.rooms[0];
+function removeFromRoom(socket) {
+    const room = rooms[socket.roomId]
+    if(room?.members) {
+        delete room.members[socket.id]
+    }
 }
+
 
 function createRoom(id) {
     console.log(`Creating room ${id}`)
