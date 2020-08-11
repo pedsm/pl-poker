@@ -20,6 +20,9 @@ const store = new Vuex.Store({
         }
         return []
       },
+      getRoom(state) {
+        return state.room
+      },
       getMembers(state) {
         if(state.room) {
           return state.room.members
