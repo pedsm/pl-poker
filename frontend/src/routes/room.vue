@@ -4,20 +4,28 @@
         <h1>Room: {{$route.params.room}}</h1>
         <h2>Ppl in the room</h2>
         <div class="hand">
-            <div v-for="member in $store.getters.getMembers" :key="member.id">
+            <div v-for="member in $store.getters.members" :key="member.id">
                 {{member.name}}
                 <br>
-                {{$store.getters.getDeck[member.card]}}
+                <div v-if="member.card" class="card mini">
+                    <span v-if="member.hidden">
+                        H 
+                    </span>
+                    <span v-else>
+                        {{$store.getters.deck[member.card]}}
+                    </span>
+                </div>
             </div>
         </div>
         <h2>Hand:</h2>
         <div class="hand">
-            <div class="card" v-for="(card, index) in $store.getters.getDeck" :key="card" @click="pickCard(index)">
+            <div class="card" v-for="(card, index) in $store.getters.deck" :class="index != me.card || 'active'" :key="card" @click="pickCard(index)">
                 {{card}}
             </div>
         </div>
         <div class="hand">
             <div class="bt" @click="pickUp">Pick up card</div>
+            <div class="bt" @click="flipCard">Flip card</div>
         </div>
     </div>
 </template>
@@ -30,14 +38,25 @@ export default {
         console.log(`Joining room ${room}`)
         this.$socket.emit('join', room)
     },
+    computed: {
+        socket() {
+            return this.$socket
+        },
+        me() {
+            return this.$store.getters.members
+                .find(mem => mem.id == this.$socket.id)
+        }
+    },
     methods: {
         changeName(event) {
             const name = event.target.value
-            console.log(name)
             this.$socket.emit('changeName', name)
         },
         pickCard(index) {
             this.$socket.emit('pickCard', index)
+        },
+        flipCard() {
+            this.$socket.emit('flipCard')
         },
         pickUp() {
             this.$socket.emit('pickCard', null)
@@ -54,11 +73,11 @@ export default {
 }
 .card {
     cursor: pointer;
-    width: 4rem;
-    padding: 3rem 1rem;
+    width: 2em;
+    padding: 2em 1em;
     margin: 5px;
     border: 2px solid black;
-    font-size: 2rem;
+    font-size: 2em;
 }
 
 .card:hover {
@@ -66,6 +85,15 @@ export default {
     box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.75);
     transform: scale(1.1);
 
+}
+
+.mini {
+    font-size: 1em !important;
+}
+
+.active {
+    background-color: steelblue;
+    color:white;
 }
 
 </style>

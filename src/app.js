@@ -23,7 +23,8 @@ io.on('connection', (socket) => {
     console.log('A user has connected');
     socket.member = {
         name: "Jeff",
-        card: null
+        card: null,
+        hidden: true
     }
     socket.on('join', (roomId) => {
         if (rooms[roomId] == null) {
@@ -37,7 +38,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on('pickCard', (index) => {
+        socket.member.hidden = true;
         socket.member.card = index;
+        poolRoom(getRoomForSocket(socket))
+    })
+
+    socket.on('flipCard', () => {
+        socket.member.hidden = !socket.member.hidden;
         poolRoom(getRoomForSocket(socket))
     })
 

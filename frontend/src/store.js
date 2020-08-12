@@ -9,22 +9,21 @@ const store = new Vuex.Store({
     },
     mutations: {
         socket_pool(state, room) {
-            console.log(room)
             state.room = room
         }
     },
     getters: {
-      getDeck(state) {
+      deck(state) {
         if(state.room) {
           return state.room.deck
         }
         return []
       },
-      getRoom(state) {
+      room(state) {
         return state.room
       },
-      getMembers(state) {
-        if(state.room) {
+      members(state) {
+        if(state.room?.members) {
           return state.room.members
         }
         return []
@@ -33,7 +32,7 @@ const store = new Vuex.Store({
 })
 
 Vue.use(new VueSocketIO({
-  debug: true,
+  debug: false,
   connection: 'http://localhost:3000',
   vuex: {
     store,
