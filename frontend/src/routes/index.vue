@@ -31,25 +31,10 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  text-align: center;
-  margin-top: 60px;
-}
-
+<style scoped>
 input {
   padding: 10px;
   border-radius: 10px;
   border: 1px solid black;
-}
-
-.bt {
-  color: white;
-  background-color: black;
-  padding: 10px 20px;
-  border: 0;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
 }
 </style>
