@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/app.js",
+    "postinstall": "npm run build",
+    "prebuild": "rm -r dist | true",
+    "build": "cd frontend && npm run build",
+    "postbuild": "mv frontend/dist .",
     "dev": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
