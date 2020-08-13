@@ -22,9 +22,12 @@ app.get('/health', (req, res) => {
     })
 })
 
-app.get('/', (req, res) => {
+function serveVue(req, res) {
     res.sendFile(path.join(__dirname, '../dist/index.html'))
-})
+}
+
+app.get('/', serveVue)
+app.get('/r/*', serveVue)
 
 io.on('connection', (socket) => {
     console.log('A user has connected');
