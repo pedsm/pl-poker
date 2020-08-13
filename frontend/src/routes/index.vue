@@ -32,6 +32,9 @@ export default {
 </script>
 
 <style scoped>
+* {
+  font-weight: 800;
+}
 input {
   padding: 10px;
   border-radius: 10px;

@@ -7,7 +7,7 @@
         <div class="table">
             <div class="row">
                 <div v-for="member in membersOnTable" :key="member.id">
-                    <div v-if="member.card" class="card mini">
+                    <div class="card mini">
                         <span v-if="member.hidden">
                             H 
                         </span>
@@ -17,7 +17,9 @@
                     </div>
                     <p>
                         <i class="fa fa-user"></i>
-                        {{member.name}}
+                        <span :class="member.id !== me.id || 'b'">
+                            {{member.name}}
+                        </span>
                     </p>
                 </div>
             </div>
@@ -25,7 +27,15 @@
         <div>
             <div class="hand">
                 <div class="bt" @click="pickUp">Pick up card</div>
-                <div class="bt" @click="flipCard">Flip card</div>
+                <div class="bt" @click="flipCard">
+                    <template v-if="me.hidden">
+                        Show
+                    </template>
+                    <template v-else>
+                        Hide
+                    </template>
+                    Card
+                </div>
             </div>
             <div class="hand">
                 <div class="card grow" v-for="(card, index) in $store.getters.deck" :class="index != me.card || 'active'" :key="card" @click="pickCard(index)">

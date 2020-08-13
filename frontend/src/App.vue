@@ -31,4 +31,8 @@ input[type=text] {
     padding: 0em;
     height: 3em;
 }
+
+.b {
+  font-weight: 900;
+}
 </style>
