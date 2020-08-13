@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: 'Room'
+    name: 'App'
 }
 </script>
 

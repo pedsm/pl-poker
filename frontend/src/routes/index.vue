@@ -11,11 +11,10 @@
 </template>
 
 <script>
-
 export default {
-  name: 'App',
+  name: 'Index',
   data: () => ({
-      roomNumber: ''
+      roomNumber: '',
   }),
   methods: {
       joinRoom: function() {

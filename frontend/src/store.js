@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VueSocketIO from 'vue-socket.io'
 
+import config from './config'
+
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
@@ -33,7 +35,7 @@ const store = new Vuex.Store({
 
 Vue.use(new VueSocketIO({
   debug: false,
-  connection: 'http://localhost:3000',
+  connection: config.API_URL,
   vuex: {
     store,
     actionPrefix: 'socket_',

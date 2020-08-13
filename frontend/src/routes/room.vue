@@ -28,7 +28,7 @@
             <div class="hand">
                 <div class="bt" @click="pickUp">Pick up card</div>
                 <div class="bt" @click="flipCard">
-                    <template v-if="me.hidden">
+                    <template v-if="true || me.hidden">
                         Show
                     </template>
                     <template v-else>
@@ -47,10 +47,12 @@
 </template>
 
 <script>
+import config from '../config'
 
 export default {
     name: 'room',
     created() {
+        console.log(config.API_URL)
         const {room} = this.$route.params
         this.$socket.emit('join', room)
     },

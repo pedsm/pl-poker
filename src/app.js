@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express');
 const { join } = require('path');
+const path = require('path')
 const app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
@@ -12,11 +13,17 @@ http.listen(PORT, () => {
     console.log(`Server running on ${PORT}`)
 })
 
-app.get('/', (req, res) => {
+app.use(express.static('dist'))
+
+app.get('/health', (req, res) => {
     res.send({
         clientCount: Object.keys(io.sockets.sockets).length, // this is probably wrong if it is counting rooms as sockets
         roomCount: Object.keys(rooms).length
     })
+})
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'))
 })
 
 io.on('connection', (socket) => {
