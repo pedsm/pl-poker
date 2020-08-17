@@ -15,10 +15,10 @@
                 </ul>
             </div>
             <div class="row">
-                <div v-for="member in membersOnTable" :key="member.id">
-                    <div class="card mini">
+                <div v-for="member in membersOnTable" :key="member.id" class="animate__animated animate__flipInX">
+                    <div class="card mini animate__animated" :class="member.hidden || 'animate__tada'">
                         <span style="color:white" v-if="member.hidden">
-                            H 
+                            _ 
                         </span>
                         <span v-else>
                             {{$store.getters.deck[member.card]}}
@@ -139,6 +139,7 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    transition-duration: 1s;
 }
 .card {
     width: 2em;
