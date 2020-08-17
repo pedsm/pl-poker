@@ -77,7 +77,8 @@ setInterval(() => {
 }, 1000)
 
 function poolRoom(room) {
-    // this crashed btw fix it my guy
+    if(room?.members == null) return
+
     const memberSockets = Object.entries(room.members)
     const members = memberSockets
         .map(([id, mSocket]) => ({

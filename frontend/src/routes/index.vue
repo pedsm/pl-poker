@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="form">
     <h1>Planning-poker</h1>
     <div>
       <p>
@@ -34,9 +34,11 @@ export default {
 * {
   font-weight: 800;
 }
-input {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid black;
+
+
+#form {
+  width: 400px;
+  text-align: center;
+  margin: 20vh auto;
 }
 </style>

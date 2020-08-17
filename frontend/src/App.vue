@@ -32,6 +32,16 @@ input[type=text] {
     height: 3em;
 }
 
+.bt {
+  color: white;
+  background-color: black;
+  padding: 10px 20px;
+  border: 0;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .b {
   font-weight: 900;
 }

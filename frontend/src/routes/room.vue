@@ -2,9 +2,16 @@
     <div id="room">
         <header class="row spread">
             <h1>Room: {{$route.params.room}}</h1>
-            <input @keyup="changeName" type="text" value="Jeff">
+            <input @change="changeName" type="text" value="Jeff">
         </header>
         <div class="table">
+            <div>
+                <ul class="rightFloat">
+                    <li v-for="member in $store.getters.members" :key="member.id">
+                        <i class="fa fa-user"></i> {{member.name}}
+                    </li>
+                </ul>
+            </div>
             <div class="row">
                 <div v-for="member in membersOnTable" :key="member.id">
                     <div class="card mini">
@@ -92,6 +99,19 @@ export default {
     /* outline: 1px solid black; */
 }
 
+li {
+    list-style-type: none;
+    padding-bottom: 2px;
+}
+.rightFloat {
+    position: absolute;
+    right: 0px;
+    top: 2em;
+    padding: 20px;
+    text-align:left;
+    width: 130px;
+}
+
 #room {
     height:100vh;
     width: 100%;
@@ -149,15 +169,5 @@ export default {
 .active {
     background-color: steelblue;
     color:white;
-}
-
-.bt {
-  color: white;
-  background-color: black;
-  padding: 10px 20px;
-  border: 0;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
 }
 </style>
