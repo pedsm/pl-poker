@@ -43,7 +43,7 @@
                     <template v-else>
                         Hide
                     </template>
-                    Card
+                    card
                 </div>
             </div>
             <div class="hand">
