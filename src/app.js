@@ -45,6 +45,7 @@ io.on('connection', (socket) => {
 
     socket.on('changeName', (name) => {
         socket.member.name = name
+        poolRoom(getRoomForSocket(socket))
     })
 
     socket.on('pickCard', (index) => {

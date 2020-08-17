@@ -8,14 +8,16 @@
             <div>
                 <ul class="rightFloat">
                     <li v-for="member in $store.getters.members" :key="member.id">
-                        <i class="fa fa-user"></i> {{member.name}}
+                        <span :class="member.id !== me.id || 'b'">
+                            <i class="fa fa-user"></i> {{member.name}}
+                        </span>
                     </li>
                 </ul>
             </div>
             <div class="row">
                 <div v-for="member in membersOnTable" :key="member.id">
                     <div class="card mini">
-                        <span v-if="member.hidden">
+                        <span style="color:white" v-if="member.hidden">
                             H 
                         </span>
                         <span v-else>
@@ -95,10 +97,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-    /* outline: 1px solid black; */
-}
-
 li {
     list-style-type: none;
     padding-bottom: 2px;
@@ -114,7 +112,7 @@ li {
 
 #room {
     height:100vh;
-    width: 100%;
+    width: 100vw;
     padding: 0;
     display: grid;
     grid-template-rows: 64px auto 250px;
@@ -148,7 +146,7 @@ li {
     margin: 5px;
     border: 2px solid black;
     background-color: white;
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: center;
 }
 
