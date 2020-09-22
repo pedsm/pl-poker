@@ -21,14 +21,14 @@
                     </li>
                 </ul>
             </div>
-            <div v-if="onTable" class="row">
+            <div class="row">
                 <TableCard v-for="member in membersOnTable"
                     v-bind:key="member.id"
                     v-bind:member="member">
                 </TableCard>
             </div>
         </div>
-        <Hand/>
+        <Hand v-if="onTable"/>
     </div>
 </template>
 
@@ -61,6 +61,9 @@ export default {
                 .filter(mem => mem.card != null)
         },
         onTable() {
+            if(this.me == null) {
+                return false
+            }
             return this.me.name != ''
         }
     },

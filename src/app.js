@@ -45,6 +45,10 @@ io.on('connection', (socket) => {
 
     socket.on('changeName', (name) => {
         socket.member.name = name
+        if(name == '') {
+            socket.member.hidden = true;
+            socket.member.card = null;
+        }
         poolRoom(getRoomForSocket(socket))
     })
 
