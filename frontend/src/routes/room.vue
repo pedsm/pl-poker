@@ -2,19 +2,26 @@
     <div id="room">
         <header class="row spread">
             <h1>Room: {{$route.params.room}}</h1>
-            <input @change="changeName" type="text" value="Jeff">
+            <input 
+                @change="changeName" 
+                type="text" 
+                placeholder="Enter your name..." 
+                class="animate__animated animate__heartBeat animate__repeat-2"
+            />
         </header>
         <div class="table">
             <div>
                 <ul class="rightFloat">
                     <li v-for="member in $store.getters.members" :key="member.id">
                         <span :class="member.id !== me.id || 'b'">
-                            <i class="fa fa-user"></i> {{member.name}}
+                            <i class="fa fa-user"></i> 
+                            <template v-if="member.name"> {{member.name}}</template>
+                            <template v-else> No name</template>
                         </span>
                     </li>
                 </ul>
             </div>
-            <div class="row">
+            <div v-if="onTable" class="row">
                 <TableCard v-for="member in membersOnTable"
                     v-bind:key="member.id"
                     v-bind:member="member">
@@ -52,6 +59,9 @@ export default {
         membersOnTable() {
             return this.$store.getters.members
                 .filter(mem => mem.card != null)
+        },
+        onTable() {
+            return this.me.name != ''
         }
     },
     methods: {

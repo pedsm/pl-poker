@@ -32,7 +32,7 @@ app.get('/r/*', serveVue)
 io.on('connection', (socket) => {
     console.log('A user has connected');
     socket.member = {
-        name: "Jeff",
+        name: "",
         card: null,
         hidden: true
     }
