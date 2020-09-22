@@ -2,64 +2,47 @@
     <div id="room">
         <header class="row spread">
             <h1>Room: {{$route.params.room}}</h1>
-            <input @change="changeName" type="text" value="Jeff">
+            <input 
+                @change="changeName" 
+                type="text" 
+                placeholder="Enter your name..." 
+                class="animate__animated animate__heartBeat animate__repeat-2"
+            />
         </header>
         <div class="table">
             <div>
                 <ul class="rightFloat">
                     <li v-for="member in $store.getters.members" :key="member.id">
                         <span :class="member.id !== me.id || 'b'">
-                            <i class="fa fa-user"></i> {{member.name}}
+                            <i class="fa fa-user"></i> 
+                            <template v-if="member.name"> {{member.name}}</template>
+                            <template v-else> No name</template>
                         </span>
                     </li>
                 </ul>
             </div>
             <div class="row">
-                <div v-for="member in membersOnTable" :key="member.id" class="animate__animated animate__flipInX">
-                    <div class="card mini animate__animated" :class="member.hidden || 'animate__tada'">
-                        <span style="color:white" v-if="member.hidden">
-                            _ 
-                        </span>
-                        <span v-else>
-                            {{$store.getters.deck[member.card]}}
-                        </span>
-                    </div>
-                    <p>
-                        <i class="fa fa-user"></i>
-                        <span :class="member.id !== me.id || 'b'">
-                            {{member.name}}
-                        </span>
-                    </p>
-                </div>
+                <TableCard v-for="member in membersOnTable"
+                    v-bind:key="member.id"
+                    v-bind:member="member">
+                </TableCard>
             </div>
         </div>
-        <div>
-            <div class="hand">
-                <div class="bt" @click="pickUp">Pick up card</div>
-                <div class="bt" @click="flipCard">
-                    <template v-if="true || me.hidden">
-                        Show
-                    </template>
-                    <template v-else>
-                        Hide
-                    </template>
-                    card
-                </div>
-            </div>
-            <div class="hand">
-                <div class="card grow" v-for="(card, index) in $store.getters.deck" :class="index != me.card || 'active'" :key="card" @click="pickCard(index)">
-                    {{card}}
-                </div>
-            </div>
-        </div>
+        <Hand v-if="onTable"/>
     </div>
 </template>
 
 <script>
 import config from '../config'
+import Hand from '../components/Hand'
+import TableCard from '../components/TableCard'
 
 export default {
     name: 'room',
+    components: {
+        Hand,
+        TableCard,
+    },
     created() {
         console.log(config.API_URL)
         const {room} = this.$route.params
@@ -76,6 +59,12 @@ export default {
         membersOnTable() {
             return this.$store.getters.members
                 .filter(mem => mem.card != null)
+        },
+        onTable() {
+            if(this.me == null) {
+                return false
+            }
+            return this.me.name != ''
         }
     },
     methods: {
@@ -83,15 +72,6 @@ export default {
             const name = event.target.value
             this.$socket.emit('changeName', name)
         },
-        pickCard(index) {
-            this.$socket.emit('pickCard', index)
-        },
-        flipCard() {
-            this.$socket.emit('flipCard')
-        },
-        pickUp() {
-            this.$socket.emit('pickCard', null)
-        }
     }
 }
 </script>
@@ -108,6 +88,10 @@ li {
     padding: 20px;
     text-align:left;
     width: 130px;
+}
+
+.spread {
+    justify-content: space-between !important;
 }
 
 #room {
@@ -129,44 +113,5 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-}
-
-.spread {
-    justify-content: space-between !important;
-}
-
-.hand {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    transition-duration: 1s;
-}
-.card {
-    width: 2em;
-    padding: 2em 1em;
-    margin: 5px;
-    border: 2px solid black;
-    background-color: white;
-    font-size: 1.5em;
-    text-align: center;
-}
-
-.grow {
-    cursor: pointer;
-}
-
-.grow:hover {
-    transition-duration: 0.1s;
-    box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.75);
-    transform: scale(1.1) translate(0,-10px);
-}
-
-.mini {
-    font-size: 1em !important;
-}
-
-.active {
-    background-color: steelblue;
-    color:white;
 }
 </style>

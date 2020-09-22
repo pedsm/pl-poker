@@ -32,7 +32,7 @@ app.get('/r/*', serveVue)
 io.on('connection', (socket) => {
     console.log('A user has connected');
     socket.member = {
-        name: "Jeff",
+        name: "",
         card: null,
         hidden: true
     }
@@ -45,6 +45,10 @@ io.on('connection', (socket) => {
 
     socket.on('changeName', (name) => {
         socket.member.name = name
+        if(name == '') {
+            socket.member.hidden = true;
+            socket.member.card = null;
+        }
         poolRoom(getRoomForSocket(socket))
     })
 
