@@ -46,18 +46,4 @@ input[type=text] {
 .b {
   font-weight: 900;
 }
-/* This will go into the card component */
-.card {
-    width: 2em;
-    padding: 2em 1em;
-    margin: 5px;
-    border: 2px solid black;
-    background-color: white;
-    font-size: 1.5em;
-    text-align: center;
-}
-
-.grow {
-    cursor: pointer;
-}
 </style>

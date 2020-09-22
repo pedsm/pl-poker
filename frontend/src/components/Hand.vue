@@ -13,16 +13,23 @@
             </div>
         </div>
         <div class="hand">
-            <div class="card grow" v-for="(card, index) in $store.getters.deck" :class="index != me.card || 'active'" :key="card" @click="pickCard(index)">
-                {{card}}
-            </div>
+            <Card v-for="(card, index) in $store.getters.deck"
+                v-bind:key="index"
+                v-bind:value="card"
+                v-bind:active="index != me.card"
+                @click.native="pickCard(index)"
+            ></Card>
         </div>
     </div>
 </template>
 <script>
+import Card from './Card';
 
 export default {
     name: 'Hand',
+    components: {
+        Card,
+    },
     computed: {
         me() {
             return this.$store.getters.members

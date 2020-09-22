@@ -15,22 +15,10 @@
                 </ul>
             </div>
             <div class="row">
-                <div v-for="member in membersOnTable" :key="member.id" class="animate__animated animate__flipInX">
-                    <div class="card mini animate__animated" :class="member.hidden || 'animate__tada'">
-                        <span style="color:white" v-if="member.hidden">
-                            _ 
-                        </span>
-                        <span v-else>
-                            {{$store.getters.deck[member.card]}}
-                        </span>
-                    </div>
-                    <p>
-                        <i class="fa fa-user"></i>
-                        <span :class="member.id !== me.id || 'b'">
-                            {{member.name}}
-                        </span>
-                    </p>
-                </div>
+                <TableCard v-for="member in membersOnTable"
+                    v-bind:key="member.id"
+                    v-bind:member="member">
+                </TableCard>
             </div>
         </div>
         <Hand/>
@@ -40,11 +28,13 @@
 <script>
 import config from '../config'
 import Hand from '../components/Hand'
+import TableCard from '../components/TableCard'
 
 export default {
     name: 'room',
     components: {
         Hand,
+        TableCard,
     },
     created() {
         console.log(config.API_URL)
@@ -110,9 +100,5 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-}
-
-.mini {
-    font-size: 1em !important;
 }
 </style>
