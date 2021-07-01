@@ -31,6 +31,7 @@ input[type=text] {
     border-bottom: 2px black solid;
     padding: 0em;
     height: 3em;
+    width: 200px;
 }
 
 .bt {

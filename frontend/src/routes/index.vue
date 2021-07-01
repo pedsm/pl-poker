@@ -2,10 +2,12 @@
   <div id="form">
     <h1>Planning-poker</h1>
     <div>
-      <p>
+      <div>
         <input v-model="roomNumber" placeholder="Room name" type="text"/>
-        <button v-on:click="joinRoom" class="bt">Enter room</button>
-      </p>
+      </div>
+      <div>
+        <button style="width:200px" v-on:click="joinRoom" class="bt">Enter room</button>
+      </div>
     </div>
   </div>
 </template>
