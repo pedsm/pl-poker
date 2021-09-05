@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "prebuild": "npm ls",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "vue-cli-service serve"
@@ -29,7 +28,6 @@
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",
-    "@typescript-eslint/parser": "^2.33.0",
     "@vue/eslint-config-typescript": "^5.1.0",
     "eslint": "^7.0.0",
     "eslint-plugin-vue": "^7.17.0",
