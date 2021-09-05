@@ -57,5 +57,6 @@ input:focus-visible {
   border-radius: var(--radius);
   margin: 5px;
   cursor: pointer;
+  background: white;
 }
 </style>
