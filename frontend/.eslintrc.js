@@ -1,8 +1,8 @@
 /* eslint-disable */
 module.exports = {
   extends: [
-    'plugin:vue/base',
     'eslint:recommended',
+    'plugin:vue/base',
     '@vue/typescript'
   ],
   rules: {
