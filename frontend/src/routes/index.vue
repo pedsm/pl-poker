@@ -13,7 +13,8 @@
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   name: 'Index',
   data: () => ({
       roomNumber: '',
@@ -29,7 +30,7 @@ export default {
       }
   },
   components: {}
-}
+})
 </script>
 
 <style scoped>
