@@ -10,6 +10,5 @@ module.exports = {
       'error',
       { ignoreRestSiblings: false }
     ]
-  },
-  ignorePatterns: ['*.js', 'src/shims-*', '.eslintrc.*']
+  }
 }
