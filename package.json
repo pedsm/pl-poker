@@ -8,7 +8,7 @@
     "postinstall": "npm run build",
     "prebuild": "npm run build:fe",
     "build": "tsc",
-    "build:fe": "rm -r dist |true && cd frontend && npm install && npm run build && mv ./dist ../",
+    "build:fe": "bash build.sh",
     "dev": "nodemon -e .ts --exec ts-node src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
