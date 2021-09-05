@@ -23,7 +23,7 @@
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.4.2",
     "vue-socket.io": "^3.0.10",
-    "vue-template-compiler": "^2.6.11",
+    "vue-template-compiler": "^2.6.14",
     "vuex": "^3.5.1"
   },
   "devDependencies": {
@@ -31,7 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^2.33.0",
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/eslint-config-typescript": "^5.0.2",
-    "eslint": "^7.0.0",
+    "eslint": "^7.8.0",
     "eslint-plugin-vue": "^7.17.0",
     "typescript": "~4.1.5"
   },
