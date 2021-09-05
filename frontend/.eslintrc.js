@@ -10,5 +10,8 @@ module.exports = {
       'error',
       { ignoreRestSiblings: false }
     ]
-  }
+  },
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+  },
 }
