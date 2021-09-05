@@ -75,11 +75,22 @@ export default {
 }
 .grow:hover {
     transition-duration: 0.1s;
-    transform: scale(1.0) translate(0,-15px);
+    transform: translate(0,-15px);
 }
 .active {
-    background-color: steelblue;
-    color:white;
+    transform: translate(0,-15px);
+    text-decoration: underline;
+    overflow: hidden;
+}
+.active::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  border-radius: 10px;
+  width: 10px;
+  height: 10px;
+  background-color: steelblue;
 }
 
 </style>

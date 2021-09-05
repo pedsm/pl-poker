@@ -18,7 +18,7 @@ export default Vue.extend({
 }
 
 :root {
-  --text: #000;
+  --text: #282828;
   --radius: 8px;
 }
 

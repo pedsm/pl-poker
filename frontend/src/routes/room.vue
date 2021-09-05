@@ -92,10 +92,6 @@ li {
     padding-bottom: 2px;
 }
 .rightFloat {
-    /* position: absolute; */
-    /* right: 0px; */
-    /* top: 2em; */
-    /* padding: 20px; */
     padding-left: 0;
     text-align:left;
     width: 130px;
@@ -131,7 +127,6 @@ li {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
-    /* justify-content; */
 }
 
 .row > div {
