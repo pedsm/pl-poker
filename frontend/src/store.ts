@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import SocketIO from 'socket.io-client'
 import VueSocketIO from 'vue-socket.io'
 
 import config from './config'
@@ -7,7 +8,7 @@ import config from './config'
 Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
-        room: null
+        room: null as any
     },
     mutations: {
         socket_pool(state, room) {
@@ -33,9 +34,13 @@ const store = new Vuex.Store({
     }
 })
 
+const socketConnection = SocketIO.io(config.API_URL, {
+  withCredentials: false,
+})
+
 Vue.use(new VueSocketIO({
-  debug: false,
-  connection: config.API_URL,
+  debug: true, // TODO change this later
+  connection: socketConnection,
   vuex: {
     store,
     actionPrefix: 'socket_',

@@ -4,15 +4,22 @@
     </main>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import Vue from 'vue'
+export default Vue.extend({
     name: 'App'
-}
+})
 </script>
 
 <style>
 * {
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;;
+}
+
+:root {
+  --text: #000;
+  --radius: 8px;
 }
 
 body {
@@ -27,24 +34,31 @@ header {
 }
 
 input[type=text] {
-    border: 0;
-    border-bottom: 2px black solid;
-    padding: 0em;
-    height: 3em;
-    width: 200px;
+  border: 2px var(--text) solid;
+  padding: 1em;
+  width: 200px;
+}
+
+input {
+  border-radius: var(--radius);
+}
+
+input:focus-visible {
+  /* outline: none; */
+  border: 2px;
 }
 
 .bt {
-  color: white;
-  background-color: black;
-  padding: 10px 20px;
-  border: 0;
+  /* color: white; */
+  /* background-color: var(--text); */
+  color: var(--text);
+  padding: 10px 25px;
+  border: 2px var(--text) solid;
+  font-weight: bold;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  border-radius: var(--radius);
   margin: 5px;
-  border-radius: 5px;
   cursor: pointer;
-}
-
-.b {
-  font-weight: 900;
 }
 </style>
