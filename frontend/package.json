@@ -48,7 +48,11 @@
     "parserOptions": {
       "parser": "@typescript-eslint/parser"
     },
-    "rules": {}
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "error", { "ignoreRestSiblings": false }
+      ]
+    }
   },
   "browserslist": [
     "> 1%",
