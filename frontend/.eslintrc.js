@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   extends: [
     'plugin:vue/essential',
@@ -9,5 +10,6 @@ module.exports = {
       'error',
       { ignoreRestSiblings: false }
     ]
-  }
+  },
+  ignorePatterns: ['*.js', 'src/shims-*', '.eslintrc.*']
 }
