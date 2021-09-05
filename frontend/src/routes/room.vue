@@ -106,7 +106,7 @@ li {
     width: 100vw;
     padding: 0;
     display: grid;
-    grid-template-rows: 64px auto 220px;
+    grid-template-rows: 64px auto 240px;
 }
 
 .table {

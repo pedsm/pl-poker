@@ -32,7 +32,7 @@ http.listen(PORT, () => {
     console.log(`Server running on ${PORT}`)
 })
 
-app.use(express.static('dist'))
+app.use(express.static('fe'))
 
 app.get('/health', (_, res) => {
     res.send({
@@ -42,7 +42,7 @@ app.get('/health', (_, res) => {
 })
 
 function serveVue(req:Request, res:Response) {
-    res.sendFile(path.join(__dirname, '../dist/index.html'))
+    res.sendFile(path.join(__dirname, '../fe/index.html'))
 }
 
 app.get('/', serveVue)

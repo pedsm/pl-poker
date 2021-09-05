@@ -71,7 +71,7 @@ export default {
     justify-content: space-evenly;
     transition-duration: 1s;
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
 }
 .grow:hover {
     transition-duration: 0.1s;
@@ -88,7 +88,7 @@ export default {
   top: 3px;
   right: 3px;
   border-radius: 10px;
-  width: 10px;
+  width: calc(100% - 6px);
   height: 10px;
   background-color: steelblue;
 }

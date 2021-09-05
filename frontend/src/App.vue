@@ -44,13 +44,10 @@ input {
 }
 
 input:focus-visible {
-  /* outline: none; */
   border: 2px;
 }
 
 .bt {
-  /* color: white; */
-  /* background-color: var(--text); */
   color: var(--text);
   padding: 10px 25px;
   border: 2px var(--text) solid;
