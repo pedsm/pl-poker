@@ -90,6 +90,14 @@ io.on('connection', (socket:ISocket) => {
         poolRoom(getRoomForSocket(socket))
     })
 
+    socket.on('clearTable', () => {
+      const room = getRoomForSocket(socket) 
+      for(const [_, {member}] of Object.entries(room.members)) {
+        member.card = null
+      }
+      poolRoom(getRoomForSocket(socket))
+    })
+
 
     socket.on('pool', (roomId) => {
         io.emit('state', rooms[roomId])

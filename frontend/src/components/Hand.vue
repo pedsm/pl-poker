@@ -12,6 +12,7 @@
                 card
             </div>
             <div class="bt" @click="flipAll">Flip all cards</div>
+            <div class="bt" @click="clearTable">Clear table</div>
         </div>
         <div class="hand">
             <Card v-for="(card, index) in $store.getters.deck"
@@ -49,6 +50,9 @@ export default {
         },
         flipAll() {
             this.$socket.emit('flipAll')
+        },
+        clearTable() {
+            this.$socket.emit('clearTable')
         },
     }
 }
