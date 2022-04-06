@@ -1,21 +1,35 @@
 <template>
-  <div id="form">
-    <h1>Planning-poker</h1>
-    <div>
-      <div>
-        <input v-model="roomNumber" placeholder="Room name" type="text"/>
-      </div>
-      <div>
-        <button style="width:230px" v-on:click="joinRoom" class="bt">Enter room</button>
-      </div>
-    </div>
-  </div>
+  <c-box id="form" backgroundColor="white" animationDuration="1s" shadow="md" rounded="lg" p="5">
+    <c-text fontSize="3xl" fontWeight="bold">Planning Poker</c-text>
+    <form @submit="joinRoom">
+    <c-form-control is-required marginY="1em">
+      <c-form-label for="roomName">Room name</c-form-label>
+      <c-input id="roomName" v-model="roomNumber" placeholder="Just make one up" type="text"/>
+    </c-form-control>
+    <c-button :isDisabled="roomNumber == ''" width="100%" variant-color="blue" v-on:click="joinRoom">Enter room</c-button>
+    </form>
+  </c-box>
 </template>
 
 <script>
 import Vue from 'vue'
+import { 
+  CText,
+  CInput,
+  CBox,
+  CButton,
+  CFormControl
+} from "@chakra-ui/vue"
+
 export default Vue.extend({
   name: 'Index',
+  components: {
+    CText,
+    CInput,
+    CBox,
+    CButton,
+    CFormControl
+  },
   data: () => ({
       roomNumber: '',
   }),
@@ -29,21 +43,13 @@ export default Vue.extend({
           console.log('Room was not provided')
       }
   },
-  components: {}
 })
 </script>
 
 <style scoped>
-* {
-  font-weight: 800;
-}
-
-
 #form {
   width: 400px;
-  text-align: center;
-  margin: 20vh auto;
+  margin: auto;
 }
-
 
 </style>

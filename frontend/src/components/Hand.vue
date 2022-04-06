@@ -1,8 +1,8 @@
 <template>
     <div class="handContainer">
         <div class="handBts">
-            <div class="bt" @click="pickUp">Pick up card</div>
-            <div class="bt" @click="flipCard">
+            <c-button @click="pickUp">Pick up card</c-button>
+            <c-button @click="flipCard">
                 <template v-if="me.hidden == true">
                     Show
                 </template>
@@ -10,9 +10,9 @@
                     Hide
                 </template>
                 card
-            </div>
-            <div class="bt" @click="flipAll">Flip all cards</div>
-            <div class="bt" @click="clearTable">Clear table</div>
+            </c-button>
+            <c-button @click="flipAll">Flip all cards</c-button>
+            <c-button @click="clearTable">Clear table</c-button>
         </div>
         <div class="hand">
             <Card v-for="(card, index) in $store.getters.deck"
@@ -26,11 +26,13 @@
 </template>
 <script lang='ts'>
 import Card from './Card.vue';
+import { CButton } from "@chakra-ui/vue"
 
 export default {
     name: 'Hand',
     components: {
         Card,
+        CButton
     },
     computed: {
         me() {
@@ -59,7 +61,9 @@ export default {
 </script>
 <style scoped>
 .handContainer {
-  display: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 
 .handBts {
@@ -70,21 +74,15 @@ export default {
 
 .hand {
     display: flex;
-    flex-direction: row;
-    width: 100%;
     justify-content: space-evenly;
     transition-duration: 1s;
-    position: absolute;
-    bottom: 20px;
 }
-.grow:hover {
+.card:hover {
     transition-duration: 0.1s;
     transform: translate(0,-15px);
 }
 .active {
     transform: translate(0,-15px);
-    text-decoration: underline;
-    overflow: hidden;
 }
 .active::before {
   content: '';
@@ -94,7 +92,6 @@ export default {
   border-radius: 10px;
   width: calc(100% - 6px);
   height: 10px;
-  background-color: steelblue;
 }
 
 </style>
