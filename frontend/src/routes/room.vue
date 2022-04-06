@@ -1,7 +1,7 @@
 <template>
     <div id="room">
         <header class="row spread">
-            <h1>Room: {{$route.params.room}}</h1>
+            <h1>{{$route.params.room}}</h1>
             <input 
                 @change="changeName" 
                 type="text" 
@@ -10,34 +10,39 @@
             />
         </header>
         <div class="table">
-            <div>
-                <ul class="rightFloat">
-                    <li v-for="member in $store.getters.members" :key="member.id">
-                        <span :class="member.id !== me.id || 'b'">
-                            <i class="fa fa-user"></i> 
-                            <template v-if="member.name"> {{member.name}}</template>
-                            <template v-else> No name</template>
-                        </span>
-                    </li>
-                </ul>
-            </div>
             <div class="row">
                 <TableCard v-for="member in membersOnTable"
                     v-bind:key="member.id"
                     v-bind:member="member">
                 </TableCard>
             </div>
+            <div>
+                <ul class="rightFloat">
+                    <li v-if="watchers.length > 0"><i class="fa fa-eye"></i>{{' '}}{{watchers.length}} 
+                      Watching
+                    </li>
+                    <li v-for="member in $store.getters.members.filter(mem => mem.name != '')" :key="member.id">
+                        <span :class="member.id !== me.id || 'b'">
+                            <i class="fa fa-user"></i> 
+                            <template v-if="member.name">{{' '}}{{member.name}}</template>
+                            <template v-else> No name</template>
+                        </span>
+                    </li>
+                </ul>
+            </div>
         </div>
         <Hand v-if="onTable"/>
     </div>
 </template>
 
-<script>
+<script lang='ts'>
 import config from '../config'
-import Hand from '../components/Hand'
-import TableCard from '../components/TableCard'
+import Hand from '../components/Hand.vue'
+import TableCard from '../components/TableCard.vue'
+import { TargetEvent } from '../types'
+import Vue from 'vue'
 
-export default {
+export default Vue.extend({
     name: 'room',
     components: {
         Hand,
@@ -56,6 +61,11 @@ export default {
             return this.$store.getters.members
                 .find(mem => mem.id == this.$socket.id)
         },
+        watchers() {
+          return this.$store.getters.members 
+            .filter(mem => mem.name == '')
+
+        },
         membersOnTable() {
             return this.$store.getters.members
                 .filter(mem => mem.card != null)
@@ -68,12 +78,12 @@ export default {
         }
     },
     methods: {
-        changeName(event) {
+        changeName(event:TargetEvent) {
             const name = event.target.value
             this.$socket.emit('changeName', name)
         },
     }
-}
+})
 </script>
 
 <style scoped>
@@ -82,10 +92,7 @@ li {
     padding-bottom: 2px;
 }
 .rightFloat {
-    position: absolute;
-    right: 0px;
-    top: 2em;
-    padding: 20px;
+    padding-left: 0;
     text-align:left;
     width: 130px;
 }
@@ -99,19 +106,31 @@ li {
     width: 100vw;
     padding: 0;
     display: grid;
-    grid-template-rows: 64px auto 250px;
+    grid-template-rows: 64px auto 240px;
 }
 
 .table {
+    display: grid;
+    grid-template-columns: auto 150px;
     text-align: center;
-    margin:auto;
     height: auto;
     width: 100%;
 }
 
+.table > .row {
+  margin: auto;
+  width: 100%;
+}
+
 .row {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
 }
+
+.row > div {
+  width: 150px;
+}
+
 </style>

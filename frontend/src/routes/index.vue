@@ -6,14 +6,15 @@
         <input v-model="roomNumber" placeholder="Room name" type="text"/>
       </div>
       <div>
-        <button style="width:200px" v-on:click="joinRoom" class="bt">Enter room</button>
+        <button style="width:230px" v-on:click="joinRoom" class="bt">Enter room</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import Vue from 'vue'
+export default Vue.extend({
   name: 'Index',
   data: () => ({
       roomNumber: '',
@@ -29,7 +30,7 @@ export default {
       }
   },
   components: {}
-}
+})
 </script>
 
 <style scoped>
@@ -43,4 +44,6 @@ export default {
   text-align: center;
   margin: 20vh auto;
 }
+
+
 </style>

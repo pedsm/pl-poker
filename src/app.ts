@@ -1,13 +1,31 @@
 require('dotenv').config()
-const express = require('express');
-const { join } = require('path');
-const path = require('path')
+import express, {Request, Response} from 'express'
+import path from 'path'
+import { createServer } from 'http'
+import { Server } from 'socket.io'
+
+import { 
+  rooms, 
+  ISocket ,
+  createRoom,
+  joinRoom,
+  removeFromRoom,
+  IRoom
+} from './roomManager'
+
 const app = express();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+const http = createServer(app);
+const io = new Server(http, {
+  cors: {
+    origin: '*',
+    credentials: false
+  },
+  allowEIO3: true
+})
+
 const { PORT } = process.env
 
-const rooms = {}
+
 
 http.listen(PORT, () => {
     console.log(`Server running on ${PORT}`)
@@ -15,21 +33,21 @@ http.listen(PORT, () => {
 
 app.use(express.static('dist'))
 
-app.get('/health', (req, res) => {
+app.get('/health', (_, res) => {
     res.send({
         clientCount: Object.keys(io.sockets.sockets).length, // this is probably wrong if it is counting rooms as sockets
         roomCount: Object.keys(rooms).length
     })
 })
 
-function serveVue(req, res) {
+function serveVue(req:Request, res:Response) {
     res.sendFile(path.join(__dirname, '../dist/index.html'))
 }
 
 app.get('/', serveVue)
 app.get('/r/*', serveVue)
 
-io.on('connection', (socket) => {
+io.on('connection', (socket:ISocket) => {
     console.log('A user has connected');
     socket.member = {
         name: "",
@@ -63,6 +81,22 @@ io.on('connection', (socket) => {
         poolRoom(getRoomForSocket(socket))
     })
 
+    socket.on('flipAll', () => {
+        const room = getRoomForSocket(socket)
+        for(const [_, {member}] of Object.entries(room.members)) {
+          member.hidden = false
+        }
+        poolRoom(getRoomForSocket(socket))
+    })
+
+    socket.on('clearTable', () => {
+      const room = getRoomForSocket(socket) 
+      for(const [_, {member}] of Object.entries(room.members)) {
+        member.card = null
+      }
+      poolRoom(getRoomForSocket(socket))
+    })
+
 
     socket.on('pool', (roomId) => {
         io.emit('state', rooms[roomId])
@@ -76,12 +110,12 @@ io.on('connection', (socket) => {
 
 setInterval(() => {
     //sort that out
-    for ([id, room] of Object.entries(rooms)) {
+    for (const [_, room] of Object.entries(rooms)) {
         poolRoom(room)
     }
 }, 1000)
 
-function poolRoom(room) {
+function poolRoom(room:IRoom) {
     if(room?.members == null) return
 
     const memberSockets = Object.entries(room.members)
@@ -90,7 +124,7 @@ function poolRoom(room) {
             id,
             ...mSocket.member
         }))
-    for ([_, socket] of memberSockets) {
+    for (const [_, socket] of memberSockets) {
         socket.emit('pool', {
             id: room.id,
             deck: room.deck,
@@ -99,37 +133,6 @@ function poolRoom(room) {
     }
 }
 
-function getRoomForSocket(socket) {
+function getRoomForSocket(socket:ISocket) {
     return rooms[socket.roomId]
 }
-
-// RoomManager logic and stuff
-
-function joinRoom(roomId, socket) {
-    console.log(`${socket.id} is joining ${roomId}`)
-    socket.join(roomId, () => {
-        socket.roomId = roomId
-        console.log(`${socket.id} has joined ${roomId}`)
-    })
-    const room = rooms[roomId]
-    const { id } = socket
-    room.members[id] = socket
-}
-
-function removeFromRoom(socket) {
-    const room = rooms[socket.roomId]
-    if (room?.members) {
-        delete room.members[socket.id]
-    }
-}
-
-
-function createRoom(id) {
-    console.log(`Creating room ${id}`)
-    return {
-        id,
-        members: {},
-        deck: [1, 2, 3, 5, 8, 13, 21, 52]
-    }
-}
-

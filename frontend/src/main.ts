@@ -1,10 +1,11 @@
 import Vue from 'vue'
 
 import App from './App.vue'
-import Index from './routes/index'
-import Room from './routes/room'
 import VueRouter from 'vue-router'
 import store from './store'
+
+import Index from './routes/index.vue' 
+import Room from './routes/room.vue'
 
 // Vue.config.productionTip = false
 Vue.use(VueRouter)

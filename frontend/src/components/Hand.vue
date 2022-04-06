@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div class="hand">
+    <div class="handContainer">
+        <div class="handBts">
             <div class="bt" @click="pickUp">Pick up card</div>
             <div class="bt" @click="flipCard">
-                <template v-if="true || me.hidden">
+                <template v-if="me.hidden == true">
                     Show
                 </template>
                 <template v-else>
@@ -11,6 +11,8 @@
                 </template>
                 card
             </div>
+            <div class="bt" @click="flipAll">Flip all cards</div>
+            <div class="bt" @click="clearTable">Clear table</div>
         </div>
         <div class="hand">
             <Card v-for="(card, index) in $store.getters.deck"
@@ -22,8 +24,8 @@
         </div>
     </div>
 </template>
-<script>
-import Card from './Card';
+<script lang='ts'>
+import Card from './Card.vue';
 
 export default {
     name: 'Hand',
@@ -37,7 +39,7 @@ export default {
         },
     },
     methods: {
-        pickCard(index) {
+        pickCard(index:number) {
             this.$socket.emit('pickCard', index)
         },
         pickUp() {
@@ -46,24 +48,53 @@ export default {
         flipCard() {
             this.$socket.emit('flipCard')
         },
+        flipAll() {
+            this.$socket.emit('flipAll')
+        },
+        clearTable() {
+            this.$socket.emit('clearTable')
+        },
     }
 }
 </script>
 <style scoped>
+.handContainer {
+  display: relative;
+}
+
+.handBts {
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
 .hand {
     display: flex;
     flex-direction: row;
+    width: 100%;
     justify-content: space-evenly;
     transition-duration: 1s;
+    position: absolute;
+    bottom: 20px;
 }
 .grow:hover {
     transition-duration: 0.1s;
-    box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.75);
-    transform: scale(1.1) translate(0,-10px);
+    transform: translate(0,-15px);
 }
 .active {
-    background-color: steelblue;
-    color:white;
+    transform: translate(0,-15px);
+    text-decoration: underline;
+    overflow: hidden;
+}
+.active::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  border-radius: 10px;
+  width: calc(100% - 6px);
+  height: 10px;
+  background-color: steelblue;
 }
 
 </style>

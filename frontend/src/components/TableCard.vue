@@ -31,6 +31,7 @@ export default {
 
 <style scoped>
 .mini {
+    margin: 0px auto;
     font-size: 1em !important;
 }
 </style>
