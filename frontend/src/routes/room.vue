@@ -1,12 +1,16 @@
 <template>
     <div id="room">
         <header class="row spread">
-            <h1>{{$route.params.room}}</h1>
-            <input 
+            <c-text fontSize="3xl" fontWeight="bold">
+                {{$route.params.room}}
+            </c-text>
+            <c-input 
                 @change="changeName" 
+                @blur="changeName"
                 type="text" 
                 placeholder="Enter your name..." 
                 class="animate__animated animate__heartBeat animate__repeat-2"
+                width="200px"
             />
         </header>
         <div class="table">
@@ -40,6 +44,7 @@ import config from '../config'
 import Hand from '../components/Hand.vue'
 import TableCard from '../components/TableCard.vue'
 import { TargetEvent } from '../types'
+import { CText, CInput } from "@chakra-ui/vue"
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -47,6 +52,8 @@ export default Vue.extend({
     components: {
         Hand,
         TableCard,
+        CInput,
+        CText,
     },
     created() {
         console.log(config.API_URL)
@@ -127,10 +134,6 @@ li {
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-around;
-}
-
-.row > div {
-  width: 150px;
 }
 
 </style>
