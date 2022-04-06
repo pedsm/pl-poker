@@ -102,7 +102,7 @@ li {
 }
 
 #room {
-    height:100vh;
+    height:100%;
     width: 100vw;
     padding: 0;
     display: grid;

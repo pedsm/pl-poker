@@ -1,5 +1,8 @@
 <template>
     <main id="app">
+      <header class="banner" v-if="prodUrl">
+        You are using the Beta version of planning-poker, <a :href="prodUrl">click here to go to the production version</a>
+      </header>
        <router-view></router-view>
     </main>
 </template>
@@ -7,7 +10,11 @@
 <script lang="ts">
 import Vue from 'vue'
 export default Vue.extend({
-    name: 'App'
+    name: 'App',
+    data: () => ({
+      showBanner: process.env.VUE_APP_PROD_URL != null,
+      prodUrl: process.env.VUE_APP_PROD_URL,
+    })
 })
 </script>
 
@@ -20,6 +27,19 @@ export default Vue.extend({
 :root {
   --text: #282828;
   --radius: 8px;
+}
+
+.banner {
+  background-color: #71c580;
+  padding: 1em
+}
+
+.banner > a {
+  color: #105c7a;
+}
+
+#app {
+  height:100vh;
 }
 
 body {
