@@ -9,7 +9,7 @@ Planning poker is a minimalistic "no-rule", "no-setup" [scrum poker](https://en.
 3. Enter your own name
 4. Select a card and flip it when your team is ready
 
-![How to use](.github/plPoker.gif)
+![How to use](.github/newPlPoker.gif)
 
 > You can also go straiaght into the room if your colleagues share a link with you [https://pl-poker.herokuapp.com/r/my%20team](https://pl-poker.herokuapp.com/r/my%20team)
 
