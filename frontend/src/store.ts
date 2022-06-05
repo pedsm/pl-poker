@@ -30,7 +30,7 @@ const store = new Vuex.Store({
           return state.room.members
         }
         return []
-      }
+      },
     }
 })
 

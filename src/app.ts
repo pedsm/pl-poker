@@ -111,7 +111,7 @@ io.on('connection', (socket:ISocket) => {
 setInterval(() => {
     //sort that out
     for (const [_, room] of Object.entries(rooms)) {
-        poolRoom(room)
+        // poolRoom(room)
     }
 }, 1000)
 
