@@ -4,14 +4,18 @@
             <c-text fontSize="3xl" fontWeight="bold">
                 {{$route.params.room}}
             </c-text>
-            <c-input 
-                @change="changeName" 
-                @blur="changeName"
-                type="text" 
-                placeholder="Enter your name..." 
-                class="animate__animated animate__heartBeat animate__repeat-2"
-                width="200px"
-            />
+            <c-box w="300px" d="flex" justify-content="right">
+                <c-input 
+                    @change="changeName" 
+                    @blur="changeName"
+                    type="text" 
+                    placeholder="Enter your name..." 
+                    class="animate__animated animate__heartBeat animate__repeat-2"
+                    width="200px"
+                    mr="1em"
+                />
+                <room-settings></room-settings>
+            </c-box>
         </header>
         <div class="table">
             <div class="row">
@@ -42,9 +46,10 @@
 <script lang='ts'>
 import config from '../config'
 import Hand from '../components/Hand.vue'
+import RoomSettings from '@/components/RoomSettings.vue'
 import TableCard from '../components/TableCard.vue'
 import { TargetEvent } from '../types'
-import { CText, CInput } from "@chakra-ui/vue"
+import { CText, CInput, CBox } from "@chakra-ui/vue"
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -54,6 +59,8 @@ export default Vue.extend({
         TableCard,
         CInput,
         CText,
+        RoomSettings,
+        CBox,
     },
     created() {
         console.log(config.API_URL)
