@@ -10,7 +10,8 @@ import {
   createRoom,
   joinRoom,
   removeFromRoom,
-  IRoom
+  IRoom,
+  clearTableOnRoom
 } from './roomManager'
 
 const app = express();
@@ -24,8 +25,6 @@ const io = new Server(http, {
 })
 
 const { PORT } = process.env
-
-
 
 http.listen(PORT, () => {
     console.log(`Server running on ${PORT}`)
@@ -58,7 +57,9 @@ io.on('connection', (socket:ISocket) => {
         if (rooms[roomId] == null) {
             rooms[roomId] = createRoom(roomId)
         }
+        console.log(rooms[roomId])
         joinRoom(roomId, socket)
+        poolRoom(getRoomForSocket(socket))
     })
 
     socket.on('changeName', (name) => {
@@ -91,10 +92,15 @@ io.on('connection', (socket:ISocket) => {
 
     socket.on('clearTable', () => {
       const room = getRoomForSocket(socket) 
-      for(const [_, {member}] of Object.entries(room.members)) {
-        member.card = null
-      }
+      clearTableOnRoom(room)
       poolRoom(getRoomForSocket(socket))
+    })
+
+    socket.on('changeDeck', (newDeckIndex: number) => {
+        const room = getRoomForSocket(socket)
+        clearTableOnRoom(room)
+        room.selectedDeck = newDeckIndex
+        poolRoom(room)
     })
 
 
@@ -103,7 +109,7 @@ io.on('connection', (socket:ISocket) => {
     })
 
     socket.on('disconnect', (reason) => {
-        console.log(`${socket.id} has disconected, ${reason}`)
+        console.log(`${socket.id} has disconnected, ${reason}`)
         removeFromRoom(socket)
     })
 });
@@ -111,7 +117,7 @@ io.on('connection', (socket:ISocket) => {
 setInterval(() => {
     //sort that out
     for (const [_, room] of Object.entries(rooms)) {
-        // poolRoom(room)
+        poolRoom(room)
     }
 }, 1000)
 
@@ -127,7 +133,7 @@ function poolRoom(room:IRoom) {
     for (const [_, socket] of memberSockets) {
         socket.emit('pool', {
             id: room.id,
-            deck: room.deck,
+            ...room,
             members,
         })
     }
