@@ -18,7 +18,8 @@ const store = new Vuex.Store({
     getters: {
       deck(state) {
         if(state.room) {
-          return state.room.deck
+          const { availableDecks, selectedDeck } = state.room
+          return availableDecks[selectedDeck].cards
         }
         return []
       },
@@ -31,6 +32,12 @@ const store = new Vuex.Store({
         }
         return []
       },
+      availableDecks(state) {
+        if(state.room?.availableDecks) {
+          return state.room.availableDecks
+        }
+        return []
+      }
     }
 })
 

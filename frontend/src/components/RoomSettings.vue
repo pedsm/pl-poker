@@ -9,13 +9,15 @@
                 <c-drawer-header>Room settings</c-drawer-header>
 
                 <c-drawer-body>
-                    <c-input ref="inputInsideModal" placeholder="Type here..." />
-                    <h1>Something?</h1>
+                    <c-select @change="changeDeck" :spacing="3" :value="selectedDeck.toString()">
+                        <option v-for="(item, index) in availableDecks" v-bind:key="index" v-bind:value="index">
+                            {{`${item.name} (${item.cards})`}}
+                        </option>
+                    </c-select>
                 </c-drawer-body>
 
                 <c-drawer-footer>
-                    <c-button variant="outline" mr="3" @click="isOpen = false">Cancel</c-button>
-                    <c-button variant-color="blue">Save</c-button>
+                    <c-button variant-color="blue" mr="3" @click="isOpen = false">Close</c-button>
                 </c-drawer-footer>
             </c-drawer-content>
         </c-drawer>
@@ -32,8 +34,8 @@ import {
     CDrawerContent,
     CDrawerCloseButton,
     CButton,
-    CInput,
     CIconButton,
+    CSelect,
 } from '@chakra-ui/vue';
 import Vue from 'vue'
 
@@ -48,7 +50,7 @@ export default Vue.extend({
         CDrawerHeader,
         CDrawerOverlay,
         CDrawerContent,
-        CInput,
+        CSelect,
         CDrawerCloseButton,
     },
     data() {
@@ -59,9 +61,18 @@ export default Vue.extend({
     methods: {
         close() {
             this.isOpen = false
+        },
+        changeDeck(newDeckIndex) {
+            this.$socket.emit('changeDeck', newDeckIndex)
         }
     },
     computed: {
+        availableDecks() {
+            return this.$store.getters.availableDecks
+        },
+        selectedDeck() {
+            return this.$store.getters.room?.selectedDeck ?? 0
+        }
     },
     // methods: { }
 })

@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io'
-import { Deck, DeckList } from './decks'
+import { IDeck, DECK_LIST } from './decks'
 
 interface IMember {
   name: string,
@@ -14,8 +14,8 @@ type MemberMap = {
 export interface IRoom {
   id: string,
   members: MemberMap,
-  deck: Deck,
-  availableDecks: Deck[]
+  availableDecks: IDeck[]
+  selectedDeck: number
 }
 
 type RoomMap = {
@@ -45,13 +45,18 @@ export function removeFromRoom(socket: ISocket) {
   }
 }
 
-
 export function createRoom(id: string): IRoom {
   console.log(`Creating room ${id}`)
   return {
     id,
     members: {},
-    deck: DeckList[0],
-    availableDecks: DeckList
+    availableDecks: DECK_LIST,
+    selectedDeck: 0,
   }
+}
+
+export function clearTableOnRoom(room: IRoom) {
+    for(const [_, {member}] of Object.entries(room.members)) {
+      member.card = null
+    }
 }
