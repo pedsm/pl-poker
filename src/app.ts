@@ -1,17 +1,17 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
+
 import express, {Request, Response} from 'express'
 import path from 'path'
 import { createServer } from 'http'
 import { Server } from 'socket.io'
+import logger from './logger'
 
-import { 
+import {
   rooms, 
   ISocket ,
-  createRoom,
-  joinRoom,
-  removeFromRoom,
   IRoom,
-  clearTableOnRoom
+  RoomManager,
 } from './roomManager'
 
 const app = express();
@@ -26,8 +26,9 @@ const io = new Server(http, {
 
 const { PORT } = process.env
 
+
 http.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`)
+    logger.info(`Server running on ${PORT}`)
 })
 
 app.use(express.static('dist'))
@@ -47,31 +48,27 @@ app.get('/', serveVue)
 app.get('/r/*', serveVue)
 
 io.on('connection', (socket:ISocket) => {
-    console.log('A user has connected');
+    logger.info('A user has connected');
+
     socket.member = {
         name: "",
         card: null,
         hidden: true
     }
-    socket.on('join', (roomId) => {
-        if (rooms[roomId] == null) {
-            rooms[roomId] = createRoom(roomId)
-        }
-        console.log(rooms[roomId])
-        joinRoom(roomId, socket)
+
+    const roomManager = new RoomManager(socket)
+
+    socket.on('join', (roomId:string) => {
+        roomManager.joinRoom(roomId)
         poolRoom(getRoomForSocket(socket))
     })
 
-    socket.on('changeName', (name) => {
-        socket.member.name = name
-        if(name == '') {
-            socket.member.hidden = true;
-            socket.member.card = null;
-        }
+    socket.on('changeName', (name:string) => {
+        roomManager.changeName(name)
         poolRoom(getRoomForSocket(socket))
     })
 
-    socket.on('pickCard', (index) => {
+    socket.on('pickCard', (index:number) => {
         socket.member.hidden = true;
         socket.member.card = index;
         poolRoom(getRoomForSocket(socket))
@@ -83,24 +80,19 @@ io.on('connection', (socket:ISocket) => {
     })
 
     socket.on('flipAll', () => {
-        const room = getRoomForSocket(socket)
-        for(const [_, {member}] of Object.entries(room.members)) {
-          member.hidden = false
-        }
+        roomManager.flipAll()
         poolRoom(getRoomForSocket(socket))
     })
 
     socket.on('clearTable', () => {
       const room = getRoomForSocket(socket) 
-      clearTableOnRoom(room)
+      roomManager.clearTableOnRoom(room)
       poolRoom(getRoomForSocket(socket))
     })
 
     socket.on('changeDeck', (newDeckIndex: number) => {
-        const room = getRoomForSocket(socket)
-        clearTableOnRoom(room)
-        room.selectedDeck = newDeckIndex
-        poolRoom(room)
+        roomManager.changeDeck(newDeckIndex)
+        poolRoom(roomManager.getRoom()) // Stuff like this is why I should move it to the roomManager
     })
 
 
@@ -109,8 +101,7 @@ io.on('connection', (socket:ISocket) => {
     })
 
     socket.on('disconnect', (reason) => {
-        console.log(`${socket.id} has disconnected, ${reason}`)
-        removeFromRoom(socket)
+        roomManager.removeFromRoom(reason)
     })
 });
 
@@ -121,6 +112,7 @@ setInterval(() => {
     }
 }, 1000)
 
+// TODO: move this to the roomManager/roomService thing
 function poolRoom(room:IRoom) {
     if(room?.members == null) return
 
