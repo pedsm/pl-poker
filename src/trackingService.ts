@@ -42,7 +42,7 @@ export class MixpanelTrackingService implements ITrackingService {
             event,
             msg: `Sending event ${event}`
         })
-        this.mixpanel.track(event, properties)
+        this.mixpanel?.track(event, properties)
     }
 
     setNameForUser(id:string, name:string) {
@@ -51,7 +51,7 @@ export class MixpanelTrackingService implements ITrackingService {
             id,
             name,
         })
-        this.mixpanel.people.set(
+        this.mixpanel?.people.set(
             id, {
                 '$first_name': name,
                 'last_visited': (new Date()).toISOString()
@@ -60,7 +60,7 @@ export class MixpanelTrackingService implements ITrackingService {
     }
 
     trackRoom(name: string, props: Partial<{deckName: string}> = {}) {
-        this.mixpanel.groups.set('Room', name, {
+        this.mixpanel?.groups.set('Room', name, {
             $name: name,
             last_visited: (new Date()).toISOString(),
             ...props
