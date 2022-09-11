@@ -22,6 +22,7 @@ export interface ITrackingService {
 
 export class MixpanelTrackingService implements ITrackingService {
     private readonly mixpanel?: Mixpanel.Mixpanel
+    private cloudProvider: string
 
     constructor() {
         const token = process.env.MIXPANEL_TOKEN
@@ -31,6 +32,7 @@ export class MixpanelTrackingService implements ITrackingService {
         }
         logger.info(`Started MIXPANEL tracking service`)
         this.mixpanel = Mixpanel.init(process.env.MIXPANEL_TOKEN)
+        this.cloudProvider = process.env.CLOUD_PROVIDER ?? 'oops'
     }
 
     trackEvent(
@@ -40,7 +42,8 @@ export class MixpanelTrackingService implements ITrackingService {
         logger.debug({
             ...properties,
             event,
-            msg: `Sending event ${event}`
+            msg: `Sending event ${event}`,
+            cloudProvider: this.cloudProvider
         })
         this.mixpanel.track(event, properties)
     }
