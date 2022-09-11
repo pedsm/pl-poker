@@ -1,5 +1,6 @@
 rm -r dist | true
-cd frontend
+pushd frontend
 npm install
 npm run build
 mv ./dist ../
+pop
