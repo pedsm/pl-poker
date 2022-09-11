@@ -45,7 +45,7 @@ export class MixpanelTrackingService implements ITrackingService {
             msg: `Sending event ${event}`,
             cloudProvider: this.cloudProvider
         })
-        this.mixpanel.track(event, properties)
+        this.mixpanel.track(event, { ...properties, cloudProvider: this.cloudProvider })
     }
 
     setNameForUser(id:string, name:string) {
