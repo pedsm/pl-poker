@@ -15,14 +15,14 @@ export interface ITrackingService {
     trackEvent(
         event: TrackingEvents,
         properties: Partial<{ distinct_id: string, ip: string, roomId: string, leavingReason: string, deckName: string }>
-    )
-    setNameForUser(id: string, name: string)
-    trackRoom(name: string, props: Partial<{deckName: string}>)
+    ): Promise<void>
+    setNameForUser(id: string, name: string): Promise<void>
+    trackRoom(name: string, props: Partial<{deckName: string}>): Promise<void>
 }
 
 export class MixpanelTrackingService implements ITrackingService {
-    private readonly mixpanel?: Mixpanel.Mixpanel
-    private cloudProvider: string
+    private readonly mixpanel?: Mixpanel.Mixpanel 
+    private cloudProvider?: string
 
     constructor() {
         const token = process.env.MIXPANEL_TOKEN
@@ -31,11 +31,12 @@ export class MixpanelTrackingService implements ITrackingService {
             return
         }
         logger.info(`Started MIXPANEL tracking service`)
-        this.mixpanel = Mixpanel.init(process.env.MIXPANEL_TOKEN)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        this.mixpanel = Mixpanel.init(process.env.MIXPANEL_TOKEN!)
         this.cloudProvider = process.env.CLOUD_PROVIDER ?? 'oops'
     }
 
-    trackEvent(
+    async trackEvent(
         event: TrackingEvents,
         properties: Partial<{ distinct_id: string, ip: string, roomId: string, leavingReason: string }>
     ) {
@@ -45,16 +46,16 @@ export class MixpanelTrackingService implements ITrackingService {
             msg: `Sending event ${event}`,
             cloudProvider: this.cloudProvider
         })
-        this.mixpanel.track(event, { ...properties, cloudProvider: this.cloudProvider })
+        this.mixpanel?.track(event, { ...properties, cloudProvider: this.cloudProvider })
     }
 
-    setNameForUser(id:string, name:string) {
+    async setNameForUser(id:string, name:string) {
         logger.debug({
             msg: `Setting name`,
             id,
             name,
         })
-        this.mixpanel.people.set(
+        this.mixpanel?.people.set(
             id, {
                 '$first_name': name,
                 'last_visited': (new Date()).toISOString()
@@ -62,8 +63,8 @@ export class MixpanelTrackingService implements ITrackingService {
         )
     }
 
-    trackRoom(name: string, props: Partial<{deckName: string}> = {}) {
-        this.mixpanel.groups.set('Room', name, {
+    async trackRoom(name: string, props: Partial<{deckName: string}> = {}) {
+        this.mixpanel?.groups.set('Room', name, {
             $name: name,
             last_visited: (new Date()).toISOString(),
             ...props
