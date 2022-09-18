@@ -47,7 +47,8 @@ function serveVue(req:Request, res:Response) {
 app.get('/', serveVue)
 app.get('/r/*', serveVue)
 
-io.on('connection', (socket:ISocket) => {
+io.on('connection', (_socket) => {
+    const socket = _socket as ISocket
     logger.info('A user has connected');
 
     socket.member = {
@@ -124,7 +125,6 @@ function poolRoom(room:IRoom) {
         }))
     for (const [_, socket] of memberSockets) {
         socket.emit('pool', {
-            id: room.id,
             ...room,
             members,
         })
