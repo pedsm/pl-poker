@@ -26,15 +26,18 @@
             </div>
             <div>
                 <ul class="rightFloat">
-                    <li v-if="watchers.length > 0"><i class="fa fa-eye"></i>{{' '}}{{watchers.length}} 
-                      Watching
+                    <li v-if="watchers.length > 0">
+                      <c-text>
+                        <i class="fa fa-eye"></i>{{' '}}{{watchers.length}} 
+                        Watching
+                    </c-text>
                     </li>
                     <li v-for="member in $store.getters.members.filter(mem => mem.name != '')" :key="member.id">
-                        <span :class="member.id !== me.id || 'b'">
+                        <c-text :class="member.id !== me.id || 'b'">
                             <i class="fa fa-user"></i> 
                             <template v-if="member.name">{{' '}}{{member.name}}</template>
                             <template v-else> No name</template>
-                        </span>
+                        </c-text>
                     </li>
                 </ul>
             </div>
