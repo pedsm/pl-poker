@@ -39,9 +39,9 @@ Vue.use(Chakra, {
       CIconButton: () => ({
         color: mode('gray.900', 'white')
       }),
-      CButton: () => ({
-        color: mode('gray.900', 'white')
-      }),
+      // CButton: () => ({
+      //   color: mode('gray.900', 'white')
+      // }),
       CLink: () => ({
         color: mode('gray.900', 'white')
       })
