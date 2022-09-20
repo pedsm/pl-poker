@@ -11,7 +11,7 @@ Planning poker is a minimalistic "no-rule", "no-setup" [scrum poker](https://en.
 
 ![How to use](.github/newPlPoker.gif)
 
-> You can also go straiaght into the room if your colleagues share a link with you [https://pl-poker.io/r/my%20team](https://pl-poker.herokuapp.com/r/my%20team)
+> You can also go straiaght into the room if your colleagues share a link with you [https://pl-poker.io/r/my%20team](https://pl-poker.io/r/my%20team)
 
 ## No-Rule No-Setup
 
