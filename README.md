@@ -4,7 +4,7 @@ Planning poker is a minimalistic "no-rule", "no-setup" [scrum poker](https://en.
 
 ## How to use it
 
-1. Visit the website [https://pl-poker.herokuapp.com/](https://pl-poker.io/)
+1. Visit the website [pl-poker.io](https://pl-poker.io/)
 2. Enter the room name. You don't have to make a room, just use the same name as your collegues
 3. Enter your own name
 4. Select a card and flip it when your team is ready
