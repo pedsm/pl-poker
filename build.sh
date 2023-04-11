@@ -1,3 +1,4 @@
+npm install -g @vue/cli
 rm -r dist | true
 pushd frontend
 npm install
