@@ -1,6 +1,6 @@
 rm -r dist | true
 pushd frontend
-yarn install
-yarn build
+npm install
+npm run build
 mv ./dist ../
 popd
