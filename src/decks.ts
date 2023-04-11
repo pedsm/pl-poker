@@ -16,8 +16,4 @@ export const DECK_LIST: IDeck[] = [
         name: 'Classic',
         cards: [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100]
     },
-    {
-        name: 'Star system',
-        cards: [1,2,3,4,5]
-    },
 ]
