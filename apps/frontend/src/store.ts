@@ -41,6 +41,7 @@ const store = new Vuex.Store({
     }
 })
 
+// @ts-ignore
 const socketConnection = SocketIO.io(config.API_URL, {
   withCredentials: false,
 })

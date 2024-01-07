@@ -48,10 +48,12 @@ export default Vue.extend({
     CLink,
   },
   methods: {
+    // @ts-ignore
     toggleMode: () => this.$toggleColorMode,
   },
   computed: {
     colorMode() {
+      // @ts-ignore
       return this.$chakraColorMode();
     },
   },
