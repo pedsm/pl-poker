@@ -10,5 +10,6 @@ module.exports = {
     ],
     rules: {
       'no-console': 'error',
+      '@typescript-eslint/no-empty-interface': 'warn'
     }
   };
