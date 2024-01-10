@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
+import { FrontendRoom } from "../../backend/roomManager";
 
-export function useSocket() {
+
+export function useSocket(roomId: string) {
 	const [socket, setSocket] = useState<Socket | null>(null);
+	const [room, setRoom] = useState<FrontendRoom | null>(null);
 
 	useEffect(() => {
 		if(socket != null) {
@@ -14,6 +17,13 @@ export function useSocket() {
 			// eslint-disable-next-line no-console
 			console.log('Connected', newSocket.id)
 			setSocket(newSocket);
+			newSocket.emit('join', roomId)
+		})
+
+		newSocket?.on('poll', (data) => {
+			// eslint-disable-next-line no-console
+			console.log('poll', data)
+			setRoom(data)
 		})
 
 		return () => {
@@ -21,5 +31,12 @@ export function useSocket() {
 		};
 	}, []);
 
-	return socket;
+	const me = room?.members.find(m => m.id === socket?.id)
+
+	return {
+		socket,
+		isActiveUser: me?.name != '',
+		deck: room?.availableDecks[room.selectedDeck],
+		room
+	};
 }

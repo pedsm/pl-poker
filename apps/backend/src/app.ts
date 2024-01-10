@@ -61,39 +61,39 @@ io.on('connection', (_socket) => {
 
     socket.on('join', (roomId:string) => {
         roomManager.joinRoom(roomId)
-        poolRoom(getRoomForSocket(socket))
+        roomManager.pollRoom(getRoomForSocket(socket))
     })
 
     socket.on('changeName', (name:string) => {
         roomManager.changeName(name)
-        poolRoom(getRoomForSocket(socket))
+        roomManager.pollRoom(getRoomForSocket(socket))
     })
 
     socket.on('pickCard', (index:number) => {
         socket.member.hidden = true;
         socket.member.card = index;
-        poolRoom(getRoomForSocket(socket))
+        roomManager.pollRoom(getRoomForSocket(socket))
     })
 
     socket.on('flipCard', () => {
         socket.member.hidden = !socket.member.hidden;
-        poolRoom(getRoomForSocket(socket))
+        roomManager.pollRoom(getRoomForSocket(socket))
     })
 
     socket.on('flipAll', () => {
         roomManager.flipAll()
-        poolRoom(getRoomForSocket(socket))
+        roomManager.pollRoom(getRoomForSocket(socket))
     })
 
     socket.on('clearTable', () => {
       const room = getRoomForSocket(socket) 
       roomManager.clearTableOnRoom(room)
-      poolRoom(getRoomForSocket(socket))
+      roomManager.pollRoom(getRoomForSocket(socket))
     })
 
     socket.on('changeDeck', (newDeckIndex: number) => {
         roomManager.changeDeck(newDeckIndex)
-        poolRoom(roomManager.getRoom()) // Stuff like this is why I should move it to the roomManager
+        roomManager.pollRoom(roomManager.getRoom()) // Stuff like this is why I should move it to the roomManager
     })
 
 
@@ -109,27 +109,10 @@ io.on('connection', (_socket) => {
 setInterval(() => {
     //sort that out
     for (const [_, room] of Object.entries(rooms)) {
-        poolRoom(room)
+        roomManager.pollRoom(room)
     }
 }, 1000)
 
-// TODO: move this to the roomManager/roomService thing
-function poolRoom(room:IRoom) {
-    if(room?.members == null) return
-
-    const memberSockets = Object.entries(room.members)
-    const members = memberSockets
-        .map(([id, mSocket]) => ({
-            id,
-            ...mSocket.member
-        }))
-    for (const [_, socket] of memberSockets) {
-        socket.emit('pool', {
-            ...room,
-            members,
-        })
-    }
-}
 
 function getRoomForSocket(socket:ISocket) {
     return rooms[socket.roomId]
