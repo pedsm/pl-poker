@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
 import { FrontendRoom } from "../../backend/roomManager";
 
-
 export function useSocket(roomId: string) {
 	const [socket, setSocket] = useState<Socket | null>(null);
 	const [room, setRoom] = useState<FrontendRoom | null>(null);
@@ -61,6 +60,8 @@ export function useSocket(roomId: string) {
 		socket,
 		isActiveUser: me?.name != '',
 		deck: room?.availableDecks[room.selectedDeck],
+		selectedDeck: room?.selectedDeck,
+		availableDecks: room?.availableDecks,
 		me,
 		room,
 		methods: {

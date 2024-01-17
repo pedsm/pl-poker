@@ -5,7 +5,6 @@ import { DeckCard } from '@/components/deckCard';
 import RoomHeader from '@/components/roomHeader';
 import Table from '@/components/table';
 import { useSocket } from '@/hooks/useSocket';
-import { ChangeEvent } from 'react';
 
 interface PageProps {
 	params: {
@@ -15,11 +14,10 @@ interface PageProps {
 
 export default function RoomPage({ params }: PageProps) {
 	const { roomId } = params;
-	const { socket, room, deck, isActiveUser, methods, me } = useSocket(roomId);
+	const socket = useSocket(roomId);
+	const { room, deck, isActiveUser, methods, me } = socket
 
 	const loading = room == null
-
-
 	
 	if(loading) {
 		return (
@@ -28,11 +26,11 @@ export default function RoomPage({ params }: PageProps) {
 	}
 
 	return (
-		<div className='w-full p-2 h-full grid grid-rows-[1fr_min-content]'>
+		<div className='bg-white w-full p-2 h-full grid grid-rows-[1fr_min-content]'>
 			<div className='grid grid-rows-[min-content_auto_min-content]'>
-				<RoomHeader room={room} methods={methods} />
+				<RoomHeader socket={socket}/>
 				<Table room={room} />
-				<RoomControls methods={methods} me={me} />
+				<RoomControls socket={socket} />
 			</div>
 			{
 				isActiveUser && (
