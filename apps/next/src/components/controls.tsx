@@ -2,12 +2,18 @@ import { useSocket } from "@/hooks/useSocket"
 import { Button } from "./ui/button";
 
 interface RoomControlsProps {
-	methods: ReturnType<typeof useSocket>['methods'];
-	me: ReturnType<typeof useSocket>['me'];
+	socket: ReturnType<typeof useSocket>;
 }
 export default function RoomControls(props: RoomControlsProps) {
-	const { pickCard, flipAll, flipMyCard, clearTable } = props.methods
-	const isMyCardUp = !props.me?.hidden
+	const { pickCard, flipAll, flipMyCard, clearTable } = props.socket.methods
+	const isMyCardUp = !props.socket.me?.hidden
+	const activeUser = props.socket.isActiveUser
+	
+	if(activeUser == false) {
+		return(
+			<span></span>
+		)
+	}
 
 	return (
 		<div className="flex justify-around py-2">

@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className='max-h-screen min-h-screen grid-cols-1 grid grid-rows-[auto_32px]'>
+        <div vaul-drawer-wrapper="" className='max-h-screen min-h-screen grid-cols-1 grid grid-rows-[auto_32px]'>
           <main className="flex flex-col items-center justify-between">
             {children}
           </main>
