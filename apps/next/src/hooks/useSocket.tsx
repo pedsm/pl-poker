@@ -33,10 +33,43 @@ export function useSocket(roomId: string) {
 
 	const me = room?.members.find(m => m.id === socket?.id)
 
+	// Methods
+	const pickCard = (cardIndex: number | null) => {
+		socket?.emit('pickCard', cardIndex)
+	}
+
+	const flipAll = () => {
+		socket?.emit('flipAll')
+	}
+	const clearTable = () => {
+		socket?.emit('clearTable')
+	}
+
+	const changeDeck = (deckIndex: number) => {
+		socket?.emit('changeDeck', deckIndex)
+	}
+
+	const flipMyCard = () => {
+		socket?.emit('flipCard')
+	}
+
+	const changeName = (name: string) => {
+		socket?.emit('changeName', name)
+	}
+
 	return {
 		socket,
 		isActiveUser: me?.name != '',
 		deck: room?.availableDecks[room.selectedDeck],
-		room
+		me,
+		room,
+		methods: {
+			pickCard,
+			flipAll,
+			clearTable,
+			changeDeck,
+			flipMyCard,
+			changeName
+		}
 	};
 }
