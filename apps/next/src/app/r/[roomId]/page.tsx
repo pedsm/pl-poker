@@ -15,7 +15,7 @@ interface PageProps {
 export default function RoomPage({ params }: PageProps) {
 	const { roomId } = params;
 	const socket = useSocket(roomId);
-	const { room, deck, isActiveUser, methods, me } = socket
+	const { room, deck, isActiveUser, methods } = socket
 
 	const loading = room == null
 	

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 interface DeckCardProps {
-	card: string;
+	card: string | number;
 	onClick?: () => void;
 }
 export function DeckCard(props: DeckCardProps) {
