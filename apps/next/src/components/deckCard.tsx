@@ -1,18 +1,34 @@
-import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority"
 
 interface DeckCardProps {
 	card: string | number;
+	active?: boolean;
 	onClick?: () => void;
 }
 export function DeckCard(props: DeckCardProps) {
 	const intractable = props.onClick != null
 
-	cn
+	const card = cva(['animate-[wiggle]','font-bold duration-75 w-[90px] h-[130px] bg-white rounded-md shadow-md flex justify-center items-center relative'], {
+		variants: {
+			active: {
+				true: ['shadow-lg translate-y-[-0.3rem]']
+			},
+			intractable: {
+				true: ['cursor-pointer hover:shadow-lg hover:translate-y-[-0.3rem]'],
+				false: ['cursor-default']
+			}
+		}
+	})
+
 	return (
 		<div onClick={props.onClick} className=
-		{cn('font-bold duration-75 w-[90px] h-[130px] bg-white rounded-md shadow-md flex justify-center items-center',
-		intractable ? 'cursor-pointer hover:shadow-lg hover:translate-y-[-0.3rem]' : 'cursor-default'
-		)}>
+		{card({active: props.active, intractable})}>
+			{props.active && (
+				<>
+				<div className="bg-blue-700 w-2 h-2 rounded-full absolute top-2 right-2"></div>
+				<div className="bg-blue-700 motion-safe:animate-ping w-2 h-2 rounded-full absolute top-2 right-2"></div>
+				</>
+			)}
 			{props.card}
 		</div>
 	)
