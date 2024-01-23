@@ -8,14 +8,14 @@ interface DeckCardProps {
 export function DeckCard(props: DeckCardProps) {
 	const intractable = props.onClick != null
 
-	const card = cva(['animate-[wiggle]','font-bold duration-75 w-[90px] h-[130px] bg-white rounded-md shadow-md flex justify-center items-center relative'], {
+	const card = cva(['animate-[throw-in]','font-bold w-[90px] h-[130px] bg-white rounded-md shadow-md flex justify-center items-center relative'], {
 		variants: {
 			active: {
 				true: ['shadow-lg translate-y-[-0.3rem]']
 			},
 			intractable: {
-				true: ['cursor-pointer hover:shadow-lg hover:translate-y-[-0.3rem]'],
-				false: ['cursor-default']
+				true: ['cursor-pointer hover:shadow-lg hover:translate-y-[-0.3rem]', 'duration-75'],
+				false: ['cursor-default', 'duration-500']
 			}
 		}
 	})
