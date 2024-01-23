@@ -1,3 +1,4 @@
+import { PersonIcon } from "@radix-ui/react-icons";
 import { FrontendRoom } from "../../backend/roomManager";
 import { DeckCard } from "./deckCard";
 
@@ -23,7 +24,7 @@ export default function Table(props: TableProps) {
 					return (
 							<div className="text-center my-auto" key={key}>
 								<DeckCard card={card.hidden ? '' : cardValue} />
-								<p className="mt-2">{card.name}</p>
+								<p className="mt-2"><PersonIcon className="inline"/> {card.name}</p>
 							</div>
 						)
 					})

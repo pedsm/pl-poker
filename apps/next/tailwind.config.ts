@@ -10,6 +10,7 @@ const config: Config = {
   theme: {
     animation: {
       wiggle: "wiggle 2s ease-in-out infinite",
+      "throw-in": "throw-in 2s ease-in-out infinite",
     },
     container: {
       center: true,
@@ -71,6 +72,18 @@ const config: Config = {
         wiggle: {
           '0%, 100%': { transform: 'rotate(-3deg)' },
           '50%': { transform: 'rotate(3deg)' },
+        },
+        "throw-in": {
+          '0%': { 
+            opacity: '0',
+            transform: 'translate(0, +40px) rotate(3deg)' 
+          },
+          '50%': {
+            opacity: '1',
+          },
+          '100%': { 
+            transform: 'translate(0)' 
+          },
         }
       },
       animation: {
