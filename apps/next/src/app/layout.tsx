@@ -5,6 +5,7 @@ import './globals.css'
 import Link from 'next/link'
 import { GitHubLogoIcon } from '@radix-ui/react-icons'
 import { Coffee } from 'lucide-react'
+import { Toaster } from '@/components/ui/sonner'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,6 +35,7 @@ export default function RootLayout({
             </Link>
           </footer>
         </div>
+      <Toaster closeButton />
       </body>
     </html>
   )
