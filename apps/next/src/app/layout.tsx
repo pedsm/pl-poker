@@ -1,6 +1,10 @@
+import { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Link from 'next/link'
+import { GitHubLogoIcon } from '@radix-ui/react-icons'
+import { Coffee } from 'lucide-react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -12,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en">
@@ -21,8 +25,13 @@ export default function RootLayout({
           <main className="flex flex-col items-center justify-between">
             {children}
           </main>
-          <footer className='h-8 bg-slate-400 text-white align-middle text-right'>
-            Replace footer
+          <footer className='h-8 bg-indigo-500 text-white flex px-2 gap-2 items-baseline align-baseline flex-row-reverse'>
+            <Link href='https://github.com/pedsm/pl-poker' target='_blank'>
+              <GitHubLogoIcon width={18} height={18} className='inline h-8' />
+            </Link>
+            <Link href='https://ko-fi.com/pedsm' target='_blank'>
+              <Coffee width={18} height={18} className='inline' />
+            </Link>
           </footer>
         </div>
       </body>

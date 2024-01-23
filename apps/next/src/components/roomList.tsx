@@ -17,7 +17,7 @@ export default function RoomList(props: RoomHeaderProps) {
 				<p><EyeOpenIcon className="inline" /> {watchCount} Watching</p>
 			)}
 			{usersWithName.map((user, i) => (
-				<p key={i}>{user.card == null 
+				<p className="truncate w-[180px]" key={i}>{user.card == null 
 					? (<PersonIcon className="inline"/>)
 					: (<CheckIcon className="inline text-green-600"/>)
 				} {user.name}</p>
