@@ -15,7 +15,7 @@ interface PageProps {
 export default function RoomPage({ params }: PageProps) {
 	const { roomId } = params;
 	const socket = useSocket(roomId);
-	const { room, deck, isActiveUser, methods } = socket
+	const { room, deck, isActiveUser, methods, me } = socket
 
 	const loading = room == null
 	
@@ -32,11 +32,12 @@ export default function RoomPage({ params }: PageProps) {
 				<Table room={room} />
 				<RoomControls socket={socket} />
 			</div>
+			{/* Below should become the Hand component */}
 			{
 				isActiveUser && (
 					<div className='flex justify-around'>
 						{deck?.cards.map((card, i) => (
-							<DeckCard key={i} onClick={() => methods.pickCard(i)} card={card.toString()} />
+							<DeckCard active={me?.card == i} key={i} onClick={() => methods.pickCard(i)} card={card.toString()} />
 						))}
 					</div>
 				)

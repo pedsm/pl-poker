@@ -16,7 +16,7 @@ export default function RoomControls(props: RoomControlsProps) {
 	}
 
 	return (
-		<div className="flex justify-around py-2">
+		<div className="flex justify-around py-2 pb-4">
 			<Button onClick={() => pickCard(null)}>Pick up card</Button>
 			<Button onClick={() => flipMyCard()}>{isMyCardUp ? 'Hide' : 'Show'} my card</Button>
 			<Button onClick={() => flipAll()}>Flip all cards</Button>

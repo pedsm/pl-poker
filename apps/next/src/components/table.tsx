@@ -18,9 +18,10 @@ export default function Table(props: TableProps) {
 				{cardsOnTable.map((card, i) => {
 					const index = card?.card ?? 0
 					const cardValue = deck.cards[index]
+					const key = `${card.name}-${index}`
 				
 					return (
-							<div className="text-center my-auto" key={i}>
+							<div className="text-center my-auto" key={key}>
 								<DeckCard card={card.hidden ? '' : cardValue} />
 								<p className="mt-2">{card.name}</p>
 							</div>
