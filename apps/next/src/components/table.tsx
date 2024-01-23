@@ -16,15 +16,15 @@ export default function Table(props: TableProps) {
 	return (
 		<div>
 			<div className="flex justify-around w-full h-full">
-				{cardsOnTable.map((card, i) => {
+				{cardsOnTable.map((card) => {
 					const index = card?.card ?? 0
 					const cardValue = deck.cards[index]
-					const key = `${card.name}-${index}`
+					const key = `${card.id}-${index}-${card.hidden}`
 				
 					return (
-							<div className="text-center my-auto" key={key}>
+							<div className="flex flex-col justify-center items-center my-auto" key={key}>
 								<DeckCard card={card.hidden ? '' : cardValue} />
-								<p className="mt-2"><PersonIcon className="inline"/> {card.name}</p>
+								<p className="mt-2 font-bold text-center truncate w-[140px]"><PersonIcon className="inline"/> {card.name}</p>
 							</div>
 						)
 					})
