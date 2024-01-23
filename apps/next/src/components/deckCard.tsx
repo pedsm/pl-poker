@@ -8,7 +8,7 @@ interface DeckCardProps {
 export function DeckCard(props: DeckCardProps) {
 	const intractable = props.onClick != null
 
-	const card = cva(['animate-[throw-in]','font-bold w-[90px] h-[130px] bg-white rounded-md shadow-md flex justify-center items-center relative'], {
+	const card = cva(['animate-[throw-in]', 'select-none', 'font-bold w-[90px] h-[130px] bg-white rounded-md shadow-md flex justify-center items-center relative'], {
 		variants: {
 			active: {
 				true: ['shadow-lg translate-y-[-0.3rem]']
