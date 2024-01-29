@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Socket, io } from "socket.io-client";
-import { FrontendRoom } from "../../backend/roomManager";
+import { FrontendRoom } from "../backend/roomManager";
+import { toast } from "sonner";
 
 export function useSocket(roomId: string) {
 	const [socket, setSocket] = useState<Socket | null>(null);
@@ -23,6 +24,11 @@ export function useSocket(roomId: string) {
 			// eslint-disable-next-line no-console
 			console.log('poll', data)
 			setRoom(data)
+		})
+
+		newSocket?.on('notify', (data) => {
+			const msg = data.msg as string
+			toast.info(msg)
 		})
 
 		return () => {
