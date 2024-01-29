@@ -1,14 +1,12 @@
-FROM node:16-alpine
+FROM node:18-alpine
 
 # Create app directory
 WORKDIR /app
 
-COPY . .
+COPY /apps/next .
 
 RUN yarn install
 
 RUN yarn build
-
-RUN mv ./apps/frontend/dist ./apps/backend/dist
 
 ENTRYPOINT ["yarn", "start"]
