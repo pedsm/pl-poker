@@ -25,8 +25,8 @@ export function DeckCard(props: DeckCardProps) {
 		{card({active: props.active, intractable})}>
 			{props.active && (
 				<>
-				<div className="bg-blue-700 w-2 h-2 rounded-full absolute top-2 right-2"></div>
-				<div className="bg-blue-700 motion-safe:animate-ping w-2 h-2 rounded-full absolute top-2 right-2"></div>
+				<div className="bg-indigo-500 w-2 h-2 rounded-full absolute top-2 right-2"></div>
+				<div className="bg-indigo-500 motion-safe:animate-ping w-2 h-2 rounded-full absolute top-2 right-2"></div>
 				</>
 			)}
 			{props.card}
