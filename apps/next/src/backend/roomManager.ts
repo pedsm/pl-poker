@@ -137,6 +137,7 @@ export class InMemoryRoomManager implements RoomManager {
     room.selectedDeck = newDeckIndex
 
     const deckName = room.availableDecks[newDeckIndex].name
+    this.notifyDeckChange(room, deckName)
     this.trackingService.trackEvent(TrackingEvents.CHANGE_DECK, {
       ...this.getPropsForTracking(),
       deckName,
@@ -151,6 +152,15 @@ export class InMemoryRoomManager implements RoomManager {
     for (const [_, { member }] of Object.entries(room.members)) {
       member.card = null
     }
+  }
+
+  private notifyDeckChange(room: Room, deckName: string) {
+    const members = Object.entries(this.getRoom().members)
+    members.forEach(([_, socket]) => {
+      socket.emit('notify', {
+        msg: `Deck changed to ${deckName}`
+      })
+    })
   }
 
   private getPropsForTracking() {
