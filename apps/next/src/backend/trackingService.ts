@@ -38,7 +38,7 @@ export class MixpanelTrackingService implements TrackingService {
 
     async trackEvent(
         event: TrackingEvents,
-        properties: Partial<{ distinct_id: string, ip: string, roomId: string, leavingReason: string }>
+        properties: Partial<{ distinct_id: string; ip: string; roomId: string; leavingReason: string }>
     ) {
         logger.debug({
             ...properties,
