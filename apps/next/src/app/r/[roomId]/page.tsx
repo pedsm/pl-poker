@@ -39,7 +39,7 @@ export default function RoomPage({ params }: PageProps) {
 				{/* Below should become the Hand component */}
 				{
 					isActiveUser && (
-						<div className='flex justify-around'>
+						<div className='flex justify-around gap-300 pl-[50px] md:pl-0 w-full'>
 							{deck?.cards.map((card, i) => (
 								<DeckCard active={me?.card == i} key={i} onClick={() => methods.pickCard(i)} card={card.toString()} />
 							))}

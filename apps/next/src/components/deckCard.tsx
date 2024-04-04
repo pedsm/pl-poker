@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { cva } from "class-variance-authority"
 
 interface DeckCardProps {
@@ -8,21 +9,23 @@ interface DeckCardProps {
 export function DeckCard(props: DeckCardProps) {
 	const intractable = props.onClick != null
 
-	const card = cva(['animate-[throw-in]', 'select-none', 'font-bold w-[90px] h-[130px] bg-white rounded-md shadow-md flex justify-center items-center relative'], {
+	const card = cva([
+		'animate-[throw-in]', 'select-none', 'font-bold w-[90px] h-[130px] bg-white rounded-md shadow-md flex justify-center items-center relative',
+	], {
 		variants: {
 			active: {
 				true: ['shadow-lg translate-y-[-0.3rem]']
 			},
 			intractable: {
-				true: ['cursor-pointer hover:shadow-lg hover:translate-y-[-0.3rem]', 'duration-75'],
+				true: ['cursor-pointer hover:shadow-lg hover:translate-y-[-0.3rem]', 'duration-75', 'ml-[-50px] md:ml-0'],
 				false: ['cursor-default', 'duration-500']
 			}
 		}
 	})
 
 	return (
-		<div onClick={props.onClick} className=
-		{card({active: props.active, intractable})}>
+		<div onClick={props.onClick} className={card({active: props.active, intractable})}>
+			<div className={cn("absolute top-2 left-2 text-xs rounded-xl", props.active ? 'text-indigo-500' : '')}>{props.card}</div>
 			{props.active && (
 				<>
 				<div className="bg-indigo-500 w-2 h-2 rounded-full absolute top-2 right-2"></div>
