@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { useRouter } from 'next/navigation'
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, FormEvent } from 'react'
 
 export default function Home() {
   const router = useRouter()
@@ -15,20 +15,25 @@ export default function Home() {
     setRoomId(event.target.value)
   }
 
-  const openRoom = () => {
-    router.push(`/r/${roomId}`)
+  const openRoom = (e: FormEvent) => {
+    e.preventDefault()
+    if(buttonEnabled) {
+      router.push(`/r/${roomId}`)
+    }
   }
 
   return (
       <Card className='w-96 align-middle my-auto'>
         <CardHeader className='font-bold'>Planning poker</CardHeader>
-        <CardContent>
-          <p>Room name</p>
-          <Input onChange={onChange} placeholder='Just make one up'></Input>
-        </CardContent>
-        <CardFooter>
-          <Button onClick={openRoom} disabled={!buttonEnabled} className='w-full'>Join room</Button>
-        </CardFooter>
+        <form onSubmit={openRoom}>
+          <CardContent>
+            <p>Room name</p>
+            <Input onChange={onChange} placeholder='Just make one up'></Input>
+          </CardContent>
+          <CardFooter>
+            <Button onClick={openRoom} disabled={!buttonEnabled} className='w-full'>Join room</Button>
+          </CardFooter>
+        </form>
       </Card>
   )
 }

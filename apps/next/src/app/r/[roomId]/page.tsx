@@ -30,7 +30,7 @@ export default function RoomPage({ params }: PageProps) {
 	return (
 		<>
 			<Notifier></Notifier>
-			<div className='bg-white w-full p-2 h-full grid grid-rows-[1fr_min-content]'>
+			<div className='w-full p-2 h-full grid grid-rows-[1fr_min-content]'>
 				<div className='grid grid-rows-[min-content_auto_min-content]'>
 					<RoomHeader socket={socket} />
 					<Table room={room} />
