@@ -31,7 +31,6 @@ export class MixpanelTrackingService implements TrackingService {
             return
         }
         logger.info(`Started MIXPANEL tracking service`)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.mixpanel = Mixpanel.init(process.env.MIXPANEL_TOKEN!)
         this.cloudProvider = process.env.CLOUD_PROVIDER ?? 'oops'
     }
@@ -66,7 +65,6 @@ export class MixpanelTrackingService implements TrackingService {
     async trackRoom(name: string, props: Partial<{ deckName: string }> = {}) {
         this.mixpanel?.groups.set('Room', name, {
             $name: name,
-            // eslint-disable-next-line @typescript-eslint/camelcase
             last_visited: (new Date()).toISOString(),
             ...props
         })

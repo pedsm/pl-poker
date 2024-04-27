@@ -31,7 +31,6 @@ export class MixpanelTrackingService implements ITrackingService {
             return
         }
         logger.info(`Started MIXPANEL tracking service`)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this.mixpanel = Mixpanel.init(process.env.MIXPANEL_TOKEN!)
         this.cloudProvider = process.env.CLOUD_PROVIDER ?? 'oops'
     }
