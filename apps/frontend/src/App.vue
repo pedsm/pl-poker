@@ -1,6 +1,6 @@
 <template>
   <c-box id="app">
-    <c-box padding="1em" bg="yellow.300" class="banner" v-if="true">
+    <c-box padding="1em" bg="yellow.300" class="banner">
       ⚠
       <c-link fontWeight="bold" color="blue.600" href="https://beta.pl-poker.io">
         Pl-poker V3 is coming soon, check it out now for a new UI dark mode, animations and almost mobile support
