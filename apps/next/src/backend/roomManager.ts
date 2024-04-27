@@ -11,7 +11,6 @@ interface Member {
   hidden: boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/interface-name-prefix
 export interface ISocket extends Socket {
   member: Member;
   roomId: string;
@@ -166,7 +165,6 @@ export class InMemoryRoomManager implements RoomManager {
   private getPropsForTracking() {
     const { id, roomId } = this.socket
     return {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       distinct_id: id,
       roomId,
       ip: this.ip

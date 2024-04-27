@@ -4,4 +4,7 @@ services:
     build: 
       context: .
     ports:
-      - "3000"
+      - "4200:4200"
+    environment: 
+      - PORT=4200
+      - NODE_ENV=production

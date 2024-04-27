@@ -1,5 +1,5 @@
 import { PersonIcon } from "@radix-ui/react-icons";
-import { FrontendRoom } from "../../backend/roomManager";
+import { FrontendRoom } from "@/backend/roomManager";
 import { DeckCard } from "./deckCard";
 
 interface TableProps {
