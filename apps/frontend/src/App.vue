@@ -3,11 +3,7 @@
     <c-box padding="1em" bg="yellow.300" class="banner" v-if="showMoveBanner">
       ⚠
       <c-link fontWeight="bold" color="blue.600" :href="prodUrl">
-        Hey we are moving! Heroku is dropping their free tier, so we are going
-        somewhere else. 
-        So we got a proper domain
-        Click here to go there (and make sure to bookmark it as this URL will be
-        gone soon)
+        Pl-poker V3 is coming soon, check it out now for a new UI dark mode, animations and almost mobile support
       </c-link>
       <br />
       <c-link
