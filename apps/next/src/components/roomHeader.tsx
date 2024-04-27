@@ -6,10 +6,19 @@ import { Input } from "./ui/input";
 import RoomList from "./roomList";
 import { Link2Icon } from "@radix-ui/react-icons";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { P } from "pino";
 
 interface RoomHeaderProps {
 	socket: ReturnType<typeof useSocket>;
 }
+
+function urlDecode(str: string | undefined) {
+	if(str == null) {
+		return null
+	}
+	return decodeURI(str)
+}
+
 export default function RoomHeader(props: RoomHeaderProps) {
 	const { room, methods } = props.socket
 
@@ -21,6 +30,8 @@ export default function RoomHeader(props: RoomHeaderProps) {
 		navigator.clipboard.writeText(window.location.href);
 		toast.info('Room link Copied to clipboard.')
 	}
+	
+	const roomId = urlDecode(room?.id)
 
 	return (
 		<div>
@@ -30,7 +41,7 @@ export default function RoomHeader(props: RoomHeaderProps) {
 					<Tooltip delayDuration={100}>
 						<TooltipTrigger asChild>
 							<h1 className='font-bold text-lg my-auto cursor-pointer' onClick={copyToClipboard}>
-								{room?.id ?? 'Loading...'} <Link2Icon className='inline' />
+								{roomId ?? 'Loading...'} <Link2Icon className='inline' />
 							</h1>
 						</TooltipTrigger>
 						<TooltipContent align="start" >
