@@ -14,4 +14,9 @@
 - 📱 Minor mobile phone optimizations
 
 ![Mobile](.github/v3/mobile.png)
+
+- 🔗 Easier link sharing
+
+![Easy link charing](.github/v3/linkSharing.png)
+
 - ⚛️ React Re-write
