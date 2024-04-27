@@ -9,7 +9,7 @@ Planning poker is a minimalistic "no-rule", "no-setup" [scrum poker](https://en.
 3. Enter your own name
 4. Select a card and flip it when your team is ready
 
-![How to use](.github/newPlPoker.gif)
+![How to use](.github/pl-pokerV3.gif)
 
 > You can also go straiaght into the room if your colleagues share a link with you [https://pl-poker.io/r/my%20team](https://pl-poker.io/r/my%20team)
 
@@ -24,3 +24,5 @@ Upon using a few online scrum poker tools it was noticible that most of the tool
 ### No-setup
 
 This implementation of planning poker also removes setups. Entering a room is as simple as just following the link. No need to "Create" and "Join" a room. You simply "Enter a room" and you "Leave the room" when you close your tab.
+
+- [Changelog](./CHANGELOG.md)
