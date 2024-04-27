@@ -34,7 +34,8 @@
                     </li>
                     <li v-for="member in $store.getters.members.filter(mem => mem.name != '')" :key="member.id">
                         <c-text :class="member.id !== me.id || 'b'">
-                            <i class="fa fa-user"></i> 
+                            <template v-if="member.card"><i class="fa fa-check"></i></template>
+                            <template v-else><i class=" fa fa-user"></i></template>
                             <template v-if="member.name">{{' '}}{{member.name}}</template>
                             <template v-else> No name</template>
                         </c-text>
@@ -146,4 +147,7 @@ li {
     justify-content: space-around;
 }
 
+.fa-check {
+    color: green;
+}
 </style>
