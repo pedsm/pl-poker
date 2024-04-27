@@ -24,7 +24,8 @@ export default function RoomHeader(props: RoomHeaderProps) {
 
 	return (
 		<div>
-			<div className='w-full grid grid-cols-[auto_200px_min-content] gap-2 py-2'>
+			<div className='w-full grid grid-cols-[auto_min-content] sm:grid-cols-[auto_200px_min-content] gap-2 py-2'>
+				<div className="hidden sm:block">
 				<TooltipProvider>
 					<Tooltip delayDuration={100}>
 						<TooltipTrigger asChild>
@@ -37,6 +38,7 @@ export default function RoomHeader(props: RoomHeaderProps) {
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>
+				</div>
 				<div>
 					<Input width={'200'} placeholder='Enter your name...' id="name" onChange={onChange}></Input>
 				</div>
