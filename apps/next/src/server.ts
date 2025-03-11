@@ -34,7 +34,7 @@ app.prepare().then(() => {
     })
 
   const io = new Server(httpServer, {
-
+    pingTimeout: 60000,
   })
 
   io.on('connection', (_socket) => {
