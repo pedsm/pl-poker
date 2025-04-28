@@ -1,6 +1,6 @@
 import { useSocket } from "@/hooks/useSocket";
 import { toast } from 'sonner'
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import RoomSettings from "./roomSettings";
 import { Input } from "./ui/input";
 import RoomList from "./roomList";
@@ -22,6 +22,7 @@ function urlDecode(str: string | undefined) {
 export default function RoomHeader(props: RoomHeaderProps) {
 	const { room, methods } = props.socket
 	const { rememberMe, name, setName } = useUser()
+	const inputRef = useRef<HTMLInputElement>(null)
 
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		methods.changeName(e.target.value)
@@ -39,6 +40,9 @@ export default function RoomHeader(props: RoomHeaderProps) {
 				duration: 3000
 			})
 			onChange({target: {value: name}} as ChangeEvent<HTMLInputElement>)
+			if(inputRef.current) {
+				inputRef.current.value = name
+			}
 		}
 	}, [rememberMe])
 
@@ -67,7 +71,7 @@ export default function RoomHeader(props: RoomHeaderProps) {
 				</TooltipProvider>
 				</div>
 				<div>
-					<Input width={'200'} placeholder='Enter your name...' id="name" onChange={onChange} value={name}></Input>
+					<Input width={'200'} placeholder='Enter your name...' id="name" onChange={onChange}></Input>
 				</div>
 				<RoomSettings socket={props.socket} />
 			</div>
