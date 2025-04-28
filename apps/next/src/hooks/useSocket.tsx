@@ -30,6 +30,10 @@ export function useSocket(roomId: string) {
 			const msg = data.msg as string
 			toast.info(msg)
 		})
+
+		newSocket?.on('disconnect', () => {
+			toast.warning('Oops... Looks like you got disconnected.')
+		})
 		
 		return () => {
 			newSocket.close();
