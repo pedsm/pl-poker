@@ -27,24 +27,25 @@ export default function RoomHeader(props: RoomHeaderProps) {
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		methods.changeName(e.target.value)
 		if(rememberMe) {
-			console.log('saving name locally', e.target.value)
 			setName(e.target.value)
 		}
 	}
 
 	useEffect(() => {
 		if(rememberMe) {
-			console.log('loading name from local storage', name)
 			toast.info(`Welcome back ${name}! We are auto-filling your name for you.`, {
 				id: 'welcome-back',
 				duration: 3000
 			})
 			onChange({target: {value: name}} as ChangeEvent<HTMLInputElement>)
-			if(inputRef.current) {
-				inputRef.current.value = name
-			}
 		}
 	}, [rememberMe])
+
+	useEffect(() => {
+		if(inputRef.current) {
+			inputRef.current.value = name
+		}
+	}, [inputRef.current])
 
 	const copyToClipboard = () => {
 		navigator.clipboard.writeText(window.location.href);
