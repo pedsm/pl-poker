@@ -28,10 +28,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
-    if(rememberMe === false) {
-      console.log('Removing name from local storage')
-      toast.info('All data has been forgotten')
-    }
   }, [rememberMe]);
 
   useEffect(() => {
