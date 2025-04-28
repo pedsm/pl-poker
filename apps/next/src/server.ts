@@ -35,17 +35,22 @@ app.prepare().then(() => {
 
   const io = new Server(httpServer, {
     pingTimeout: 60000,
+    connectTimeout: 2 * 60 * 1000,
   })
 
   io.on('connection', (_socket) => {
     const socket = _socket as ISocket
     logger.info('A user has connected');
 
-    socket.member = {
-      id: socket.id,
-      name: "",
-      card: null,
-      hidden: true
+    if(socket.recovered) {
+      console.log('Recovered connection')
+    } else {
+      socket.member = {
+        id: socket.id,
+        name: "",
+        card: null,
+        hidden: true
+      }
     }
 
     const roomManager = new InMemoryRoomManager(socket)
