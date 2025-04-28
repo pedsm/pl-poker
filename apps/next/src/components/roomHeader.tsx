@@ -1,12 +1,12 @@
 import { useSocket } from "@/hooks/useSocket";
 import { toast } from 'sonner'
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 import RoomSettings from "./roomSettings";
 import { Input } from "./ui/input";
 import RoomList from "./roomList";
 import { Link2Icon } from "@radix-ui/react-icons";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { P } from "pino";
+import { useUser } from "@/contexts/userContext";
 
 interface RoomHeaderProps {
 	socket: ReturnType<typeof useSocket>;
@@ -21,10 +21,26 @@ function urlDecode(str: string | undefined) {
 
 export default function RoomHeader(props: RoomHeaderProps) {
 	const { room, methods } = props.socket
+	const { rememberMe, name, setName } = useUser()
 
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		methods.changeName(e.target.value)
+		if(rememberMe) {
+			console.log('saving name locally', e.target.value)
+			setName(e.target.value)
+		}
 	}
+
+	useEffect(() => {
+		if(rememberMe) {
+			console.log('loading name from local storage', name)
+			toast.info(`Welcome back ${name}! We are auto-filling your name for you.`, {
+				id: 'welcome-back',
+				duration: 3000
+			})
+			onChange({target: {value: name}} as ChangeEvent<HTMLInputElement>)
+		}
+	}, [rememberMe])
 
 	const copyToClipboard = () => {
 		navigator.clipboard.writeText(window.location.href);
@@ -51,7 +67,7 @@ export default function RoomHeader(props: RoomHeaderProps) {
 				</TooltipProvider>
 				</div>
 				<div>
-					<Input width={'200'} placeholder='Enter your name...' id="name" onChange={onChange}></Input>
+					<Input width={'200'} placeholder='Enter your name...' id="name" onChange={onChange} value={name}></Input>
 				</div>
 				<RoomSettings socket={props.socket} />
 			</div>

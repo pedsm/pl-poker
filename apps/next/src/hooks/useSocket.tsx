@@ -30,7 +30,7 @@ export function useSocket(roomId: string) {
 			const msg = data.msg as string
 			toast.info(msg)
 		})
-
+		
 		return () => {
 			newSocket.close();
 		};

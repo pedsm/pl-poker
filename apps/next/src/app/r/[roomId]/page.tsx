@@ -6,6 +6,7 @@ import Notifier from '@/components/notifier';
 import RoomHeader from '@/components/roomHeader';
 import Table from '@/components/table';
 import { Skeleton } from '@/components/ui/skeleton';
+import { UserProvider } from '@/contexts/userContext';
 import { useSocket } from '@/hooks/useSocket';
 
 interface PageProps {
@@ -28,7 +29,7 @@ export default function RoomPage({ params }: PageProps) {
 	}
 
 	return (
-		<>
+		<UserProvider>
 			<Notifier></Notifier>
 			<div className='w-full p-2 h-full grid grid-rows-[1fr_min-content]'>
 				<div className='grid grid-rows-[min-content_auto_min-content]'>
@@ -47,6 +48,6 @@ export default function RoomPage({ params }: PageProps) {
 					)
 				}
 			</div>
-		</>
+		</UserProvider>
 	);
 }

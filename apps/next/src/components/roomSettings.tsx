@@ -13,6 +13,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { useSocket } from "@/hooks/useSocket";
 import { FrameIcon } from "@radix-ui/react-icons";
 import { useTheme } from "next-themes";
+import { useUser } from "@/contexts/userContext";
+import { Switch } from "./ui/switch";
 
 interface RoomSettingsProps {
 	socket: ReturnType<typeof useSocket>;
@@ -31,6 +33,7 @@ export default function RoomSettings(props: RoomSettingsProps) {
 	const selectedDeckIndex = props.socket?.room?.selectedDeck ?? 0
 	const {theme, themes, setTheme} = useTheme()
 
+	const { rememberMe, setRememberMe } = useUser()
 
 	const handleChangeDeck = (deckIndex: string) => {
 		props.socket.methods.changeDeck(+deckIndex)
@@ -83,6 +86,13 @@ export default function RoomSettings(props: RoomSettingsProps) {
 								))}
 							</SelectContent>
 						</Select>
+					</div>
+					<div className="px-4 mt-2">
+						<div className="flex gap-2 items-center justify-between">
+							<p className="text-lg">Remember me</p>
+							<Switch checked={rememberMe} onCheckedChange={setRememberMe} />
+						</div>
+						<p className="text-sm text-muted-foreground">If you select this, we will store your name on your browser and auto-fill it next time you join any room.</p>
 					</div>
 					<DrawerFooter>
 						<DrawerClose>
